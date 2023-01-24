@@ -12,27 +12,23 @@ const RegisterForm = () => {
     password: "",
   });
   return (
-    <div>
+    <RegisterFormStyle>
       <Column>
         <Row>
-          <div>
-            <FormInput
-              fieldName="name"
-              value={data.name}
-              type="text"
-              data={data}
-              setData={setData}
-            />
-          </div>
-          <div>
-            <FormInput
-              fieldName="surname"
-              value={data.surname}
-              type="surname"
-              setData={setData}
-              data={data}
-            />
-          </div>
+          <FormInput
+            fieldName="name"
+            value={data.name}
+            type="text"
+            data={data}
+            setData={setData}
+          />
+          <FormInput
+            fieldName="surname"
+            value={data.surname}
+            type="surname"
+            setData={setData}
+            data={data}
+          />
         </Row>
         <Row>
           <FormInput
@@ -60,8 +56,9 @@ const RegisterForm = () => {
             setData={setData}
           />
         </Row>
+        <button>Register</button>
       </Column>
-    </div>
+    </RegisterFormStyle>
   );
 };
 
@@ -81,10 +78,17 @@ const Row = styled.div`
   width: 100%;
 `;
 
+const RegisterFormStyle = styled.div`
+  height: 80%;
+`;
+
 const Column = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  align-self: stretch;
+  align-content: space-around;
+
   /* justify-content: space-between; */
 `;
 

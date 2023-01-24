@@ -14,9 +14,9 @@ const LoginSite = () => {
   };
 
   return (
-    <div>
+    <div style={{ height: "92%" }}>
       {loginForm ? (
-        <>
+        <LoginSiteStyle>
           <LoginForm />
           <InfoPanel>
             <h3>Dont have account? Create in few moments</h3>
@@ -24,9 +24,9 @@ const LoginSite = () => {
               Register page
             </ChangePanelButton>
           </InfoPanel>
-        </>
+        </LoginSiteStyle>
       ) : (
-        <>
+        <LoginSiteStyle>
           <RegisterForm />
           <InfoPanel>
             <h3>Did You already create account? Go to login page</h3>
@@ -34,16 +34,24 @@ const LoginSite = () => {
               Login page
             </ChangePanelButton>
           </InfoPanel>
-        </>
+        </LoginSiteStyle>
       )}
     </div>
   );
 };
 
+const LoginSiteStyle = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+`;
+
 const InfoPanel = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 20%;
 `;
 
 const ChangePanelButton = styled.button`

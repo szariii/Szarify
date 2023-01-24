@@ -30,20 +30,25 @@ const FormInputStyle = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-bottom: 2px solid black;
-
+  width: 40%;
   &:focus-visible {
-    outline: none;
-  }
-
-  &:focus {
-    outline: none;
+    border: 0;
+    outline: 0;
   }
 `;
 
 const InputStyle = styled.input`
   border: 0;
   text-align: center;
+  font-size: 2rem;
+  border-bottom: 2px solid black;
+  background-color: #fff2f2;
+  &:focus-visible {
+    border: 0;
+    outline: 0;
+    border-color: #7286d3;
+    border-bottom: 2px solid #7286d3;
+  }
 `;
 
 export default FormInput;
