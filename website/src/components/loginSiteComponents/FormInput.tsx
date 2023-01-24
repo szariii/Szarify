@@ -30,6 +30,7 @@ const FormInputStyle = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-bottom: 2px solid black;
 
   &:focus-visible {
     outline: none;

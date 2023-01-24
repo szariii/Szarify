@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Link, Route, Switch } from "react-router-dom";
 
 //Styled Components
 import GlobalCSS from "./global";
@@ -11,11 +11,9 @@ function App() {
   return (
     <>
       <GlobalCSS />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<LoginSite />} />
-        </Routes>
-      </BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={LoginSite} />
+      </Switch>
     </>
   );
 }
