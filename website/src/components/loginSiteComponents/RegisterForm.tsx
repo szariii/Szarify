@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import FormInput from "./FormInput";
+import axios from "axios";
 
 const RegisterForm = () => {
   const [data, setData] = useState<FormData>({
@@ -12,7 +13,7 @@ const RegisterForm = () => {
   });
   const [inputDataError, setInputDataError] = useState<string>("");
 
-  const sendDataHandler = () => {
+  const sendDataHandler = async () => {
     const regexEmali = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 
     let newErrorMessage = "";
@@ -32,6 +33,18 @@ const RegisterForm = () => {
     }
 
     setInputDataError(newErrorMessage);
+    console.log("weszlo");
+    if (newErrorMessage === "") {
+      console.log("tu");
+      const sendData: SendData = {
+        email: data.email,
+        nick: data.nick,
+      };
+      const result = await axios.post("http://127.0.0.1:3000/checkData", {
+        sendData,
+      });
+      console.log(result);
+    }
   };
 
   return (
@@ -98,6 +111,11 @@ interface FormData {
   phone: string;
 }
 
+interface SendData {
+  nick: string;
+  email: string;
+}
+
 const ErrorMessageStyle = styled.div`
   border: 2px solid red;
   padding: 2rem;
@@ -105,7 +123,7 @@ const ErrorMessageStyle = styled.div`
 
 const ErrorTextMessage = styled.h2`
   color: black;
-`
+`;
 
 const Row = styled.div`
   display: flex;
