@@ -11,6 +11,8 @@ import Nav from "./components/nav/Nav";
 import LoginSite from "./sites/LoginSite";
 import styled from "styled-components";
 
+//Colors https://colorhunt.co/palette/7286d38ea7e9e5e0fffff2f2
+
 function App() {
   return (
     <>

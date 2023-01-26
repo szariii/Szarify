@@ -47,6 +47,10 @@ const LoginSiteStyle = styled.div`
   height: 100%;
 `;
 
+// const RegisterFormStyle = styled(RegisterForm)`
+//   width: 80%;
+// `;
+
 const InfoPanel = styled.div`
   display: flex;
   flex-direction: column;
@@ -55,8 +59,13 @@ const InfoPanel = styled.div`
 `;
 
 const ChangePanelButton = styled.button`
-  width: 20rem;
-  height: 2.5rem;
+  background-color: #8ea7e9;
+  width: 8rem;
+  height: 3rem;
+  border-radius: 20px;
+  border-color: #8ea7e9;
+  color: #fff2f2;
+  font-size: 1rem;
 `;
 
 export default LoginSite;

@@ -9,56 +9,84 @@ const RegisterForm = () => {
     nick: "",
     email: "",
     phone: "",
-    password: "",
   });
-  return (
-    <RegisterFormStyle>
-      <Column>
-        <Row>
-          <FormInput
-            fieldName="name"
-            value={data.name}
-            type="text"
-            data={data}
-            setData={setData}
-          />
-          <FormInput
-            fieldName="surname"
-            value={data.surname}
-            type="surname"
-            setData={setData}
-            data={data}
-          />
-        </Row>
-        <Row>
-          <FormInput
-            fieldName="nick"
-            value={data.nick}
-            type="text"
-            data={data}
-            setData={setData}
-          />
+  const [inputDataError, setInputDataError] = useState<string>("");
 
-          <FormInput
-            fieldName="email"
-            value={data.email}
-            type="email"
-            setData={setData}
-            data={data}
-          />
-        </Row>
-        <Row>
-          <FormInput
-            fieldName="phone"
-            value={data.phone}
-            type="tel"
-            data={data}
-            setData={setData}
-          />
-        </Row>
-        <button>Register</button>
-      </Column>
-    </RegisterFormStyle>
+  const sendDataHandler = () => {
+    const regexEmali = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+
+    let newErrorMessage = "";
+
+    const emailValidate = data.email.match(regexEmali);
+    if (!emailValidate) {
+      newErrorMessage = "Incorrect email";
+    }
+
+    if (
+      data.surname === "" ||
+      data.name === "" ||
+      data.nick === "" ||
+      data.phone === ""
+    ) {
+      newErrorMessage = "You must write informations in all inputs";
+    }
+
+    setInputDataError(newErrorMessage);
+  };
+
+  return (
+    <Column id="column">
+      <Row>
+        <FormInput
+          fieldName="name"
+          value={data.name}
+          type="text"
+          data={data}
+          setData={setData}
+        />
+        <FormInput
+          fieldName="surname"
+          value={data.surname}
+          type="surname"
+          setData={setData}
+          data={data}
+        />
+      </Row>
+      <Row>
+        <FormInput
+          fieldName="nick"
+          value={data.nick}
+          type="text"
+          data={data}
+          setData={setData}
+        />
+
+        <FormInput
+          fieldName="email"
+          value={data.email}
+          type="email"
+          setData={setData}
+          data={data}
+        />
+      </Row>
+      <Row>
+        <FormInput
+          fieldName="phone"
+          value={data.phone}
+          type="number"
+          data={data}
+          setData={setData}
+        />
+      </Row>
+      <ButtonStyle onClick={sendDataHandler}>Register</ButtonStyle>
+      {inputDataError === "" ? (
+        ""
+      ) : (
+        <ErrorMessageStyle>
+          <ErrorTextMessage>{inputDataError}</ErrorTextMessage>
+        </ErrorMessageStyle>
+      )}
+    </Column>
   );
 };
 
@@ -68,8 +96,16 @@ interface FormData {
   nick: string;
   email: string;
   phone: string;
-  password: string;
 }
+
+const ErrorMessageStyle = styled.div`
+  border: 2px solid red;
+  padding: 2rem;
+`;
+
+const ErrorTextMessage = styled.h2`
+  color: black;
+`
 
 const Row = styled.div`
   display: flex;
@@ -78,8 +114,14 @@ const Row = styled.div`
   width: 100%;
 `;
 
-const RegisterFormStyle = styled.div`
-  height: 80%;
+const ButtonStyle = styled.button`
+  background-color: #8ea7e9;
+  width: 8rem;
+  height: 3rem;
+  border-radius: 20px;
+  border-color: #8ea7e9;
+  color: #fff2f2;
+  font-size: 1rem;
 `;
 
 const Column = styled.div`
@@ -88,7 +130,8 @@ const Column = styled.div`
   align-items: center;
   align-self: stretch;
   align-content: space-around;
-
+  height: 100%;
+  justify-content: space-around;
   /* justify-content: space-between; */
 `;
 
