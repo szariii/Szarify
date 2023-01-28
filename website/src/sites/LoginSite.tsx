@@ -27,7 +27,7 @@ const LoginSite = () => {
         </LoginSiteStyle>
       ) : (
         <LoginSiteStyle>
-          <RegisterForm />
+          <RegisterForm setLoginForm={setLoginForm} loginForm={loginForm} />
           <InfoPanel>
             <h3>Did You already create account? Go to login page</h3>
             <ChangePanelButton onClick={buttonClickHandler}>
@@ -66,6 +66,9 @@ const ChangePanelButton = styled.button`
   border-color: #8ea7e9;
   color: #fff2f2;
   font-size: 1rem;
+  :hover{
+    cursor: pointer;
+  }
 `;
 
 export default LoginSite;

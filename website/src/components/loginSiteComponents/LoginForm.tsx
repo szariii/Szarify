@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import LoginFormInput from "./LoginFormInput";
+import axios from "axios";
 
 const LoginForm = () => {
   const [inputDataError, setInputDataError] = useState<string>("");
@@ -9,9 +10,13 @@ const LoginForm = () => {
     email: "",
   });
 
-  const loginHandler = ()=>{
-
-  }
+  const loginHandler = async () => {
+    const result = await axios.post(
+      "http://127.0.0.1:3000/login",
+      loginFormData
+    );
+    console.log(result);
+  };
 
   return (
     <Column id="column">
