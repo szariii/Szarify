@@ -1,12 +1,10 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const NavButton = ({ name, link }: NavButtonInterfacve) => {
+const NavButton = ({ name, action }: NavButtonInterfacve) => {
   return (
-    <NavButtonStyle>
-      <LinkStyle to={link}>
-        <h2>{name}</h2>
-      </LinkStyle>
+    <NavButtonStyle onClick={() => action()}>
+      <h2>{name}</h2>
     </NavButtonStyle>
   );
 };
@@ -16,19 +14,19 @@ const LinkStyle = styled(Link)`
 `;
 
 const NavButtonStyle = styled.div`
-  width: 6rem;
+  width: auto;
   text-align: center;
-  border: 1px solid black;
-  border-top: 0;
-  border-bottom: 0;
+  border-left: 1px solid black;
   &:hover {
-    background-color: red;
+    background-color: white;
+    color: #7286d3;
+    cursor: pointer;
   }
 `;
 
 interface NavButtonInterfacve {
   name: string;
-  link: string;
+  action: Function;
 }
 
 export default NavButton;

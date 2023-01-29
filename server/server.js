@@ -10,6 +10,11 @@ const saltRounds = 10;
 const dotenv = require("dotenv");
 dotenv.config();
 
+//Modules
+const login = require("./modules/login");
+const register = require("./modules/register");
+const checkData = require("./modules/checkData");
+
 //Here we are configuring express to use body-parser as middle-ware.
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -49,98 +54,19 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
 
-app.post("/checkData", (req, res) => {
-  console.log(req.body);
-  const email = req.body.email;
-  const nick = req.body.nick;
-  const sql =
-    'SELECT `email`,`nick` FROM `users` WHERE `email`="' +
-    email +
-    '" OR `nick`="' +
-    nick +
-    '"';
-
-  connection.query(sql, (err, rows, fields) => {
-    if (err) throw err;
-
-    console.log(rows);
-
-    let obj = {
-      free: "",
-      errorMessage: "",
-    };
-
-    if (rows.length === 0) {
-      obj.free = true;
-      res.send(obj);
-    } else {
-      obj.free = false;
-      if (rows[0].email === email) {
-        obj.errorMessage = "Email is already used";
-      } else {
-        obj.errorMessage = "Nick is already used";
-      }
-      res.send(obj);
-    }
-  });
-});
+//Routes
+app.post("/checkData", (req, res) => checkData.checkData(req, res, connection));
 
 app.post("/register", (req, res) => {
-  console.log(req.body);
-
-  const hash = bcrypt.hashSync(req.body.password, saltRounds);
-
-  console.log(hash);
-  const sql = `INSERT INTO users(name,surname,email,password,phone,nick) VALUES ("${req.body.name}","${req.body.surname}","${req.body.email}","${hash}","${req.body.phone}","${req.body.nick}")`;
-
-  connection.query(sql, (err, rows, fields) => {
-    if (err) throw err;
-    res.send("added");
-  });
+  register.register(req, res, connection, bcrypt, saltRounds);
 });
 
-app.post("/login", (req, res) => {
-  console.log(req.body);
-  const sql = `SELECT * FROM users WHERE email="${req.body.email}"`;
-  connection.query(sql, (err, rows, fields) => {
-    if (err) throw err;
-    let obj = {
-      operation: false,
-      data: "",
-      errorMessage: "Something is wrong with email address or password",
-    };
-    console.log(rows);
-    if (rows.length === 0) {
-      console.log("finito");
-      res.send(obj);
-      return;
-    }
-    console.log("go");
+app.post("/login", (req, res) => login.login(req, res, connection, bcrypt));
 
-    const result = bcrypt.compareSync(req.body.password, rows[0].password);
-    console.log(result);
-
-    if (result) {
-      const sendingObj = {
-        id: rows[0].id,
-        name: rows[0].name,
-        surname: rows[0].surname,
-        email: rows[0].email,
-        phone: rows[0].phone,
-        nick: rows[0].nick,
-      };
-      obj.data = sendingObj;
-      obj.operation = true;
-      res.send(obj);
-      return;
-    }
-    res.send(obj);
-  });
-});
+app.post("/findUsers", (req,res)=>{
+  
+})
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

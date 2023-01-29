@@ -4,7 +4,7 @@ const initialState: LogginValue = {
   value: false,
 };
 
-export const logginSlicer = createSlice({
+export const loginSlicer = createSlice({
   name: "counter",
   initialState,
   reducers: {
@@ -18,6 +18,6 @@ export interface LogginValue {
   value: boolean;
 }
 
-export const { change } = logginSlicer.actions;
+export const { change } = loginSlicer.actions;
 
-export default logginSlicer.reducer;
+export default loginSlicer.reducer;

@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import type { RootState } from "../../store/store";
 import { useSelector, useDispatch } from "react-redux";
 import { setUserData } from "../../store/slicers/userDataSlicer";
+import { change } from "../../store/slicers/loginSlicer";
 
 //FontAwasome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -36,6 +37,7 @@ const LoginForm = () => {
     if (result.data.operation) {
       dispatch(setUserData(result.data.data));
       setWaitingForData(false);
+      dispatch(change());
       navigate("/main");
     } else {
       setInputDataError(result.data.errorMessage);
@@ -62,7 +64,7 @@ const LoginForm = () => {
           setData={setLoginFormData}
         />
       </Row>
-      <ButtonStyle onClick={loginHandler}>Register</ButtonStyle>
+      <ButtonStyle onClick={loginHandler}>Login</ButtonStyle>
       {inputDataError === "" ? (
         ""
       ) : (
