@@ -110,12 +110,13 @@ app.post("/login", (req, res) => {
     if (err) throw err;
     let obj = {
       operation: false,
-      data: "Something is wrong with email address or password",
+      data: "",
+      errorMessage: "Something is wrong with email address or password",
     };
     console.log(rows);
     if (rows.length === 0) {
       console.log("finito");
-      res.send(false);
+      res.send(obj);
       return;
     }
     console.log("go");

@@ -2,10 +2,12 @@ import { configureStore } from '@reduxjs/toolkit'
 
 //Reducers
 import logginReducer from "./slicers/logginSlicer"
+import userDataReducer from './slicers/userDataSlicer'
 
 export const store = configureStore({
     reducer: {
-      loggin: logginReducer
+      loggin: logginReducer,
+      userData: userDataReducer
     },
   })
 

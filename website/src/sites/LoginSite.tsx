@@ -7,7 +7,7 @@ import LoginForm from "../components/loginSiteComponents/LoginForm";
 import RegisterForm from "../components/loginSiteComponents/RegisterForm";
 
 const LoginSite = () => {
-  const [loginForm, setLoginForm] = useState(false);
+  const [loginForm, setLoginForm] = useState(true);
 
   const buttonClickHandler = () => {
     setLoginForm(!loginForm);
@@ -66,7 +66,7 @@ const ChangePanelButton = styled.button`
   border-color: #8ea7e9;
   color: #fff2f2;
   font-size: 1rem;
-  :hover{
+  :hover {
     cursor: pointer;
   }
 `;

@@ -1,5 +1,6 @@
 import React from "react";
-import { Link, Route, Switch } from "react-router-dom";
+import styled from "styled-components";
+import { Route, Routes } from "react-router-dom";
 
 //Styled Components
 import GlobalCSS from "./global";
@@ -9,7 +10,7 @@ import Nav from "./components/nav/Nav";
 
 //Sites
 import LoginSite from "./sites/LoginSite";
-import styled from "styled-components";
+import MainSite from "./sites/MainSite";
 
 //Colors https://colorhunt.co/palette/7286d38ea7e9e5e0fffff2f2
 
@@ -18,9 +19,10 @@ function App() {
     <>
       <GlobalCSS />
       <NavStyle />
-      <Switch>
-        <Route exact path="/" component={LoginSite} />
-      </Switch>
+      <Routes>
+        <Route path="/" element={<LoginSite />} />
+        <Route path="/main" element={<MainSite />} />
+      </Routes>
     </>
   );
 }

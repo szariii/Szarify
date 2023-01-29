@@ -2,20 +2,45 @@ import { useState } from "react";
 import styled from "styled-components";
 import LoginFormInput from "./LoginFormInput";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+//Redux
+import type { RootState } from "../../store/store";
+import { useSelector, useDispatch } from "react-redux";
+import { setUserData } from "../../store/slicers/userDataSlicer";
+
+//FontAwasome
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 
 const LoginForm = () => {
+  const navigate = useNavigate();
+  const [waitingForData, setWaitingForData] = useState<boolean>(false);
   const [inputDataError, setInputDataError] = useState<string>("");
   const [loginFormData, setLoginFormData] = useState<LoginFormData>({
     password: "",
     email: "",
   });
 
+  const userData = useSelector((state: RootState) => state.userData);
+  const dispatch = useDispatch();
+
   const loginHandler = async () => {
+    setInputDataError("");
+    setWaitingForData(true);
     const result = await axios.post(
       "http://127.0.0.1:3000/login",
       loginFormData
     );
     console.log(result);
+    if (result.data.operation) {
+      dispatch(setUserData(result.data.data));
+      setWaitingForData(false);
+      navigate("/main");
+    } else {
+      setInputDataError(result.data.errorMessage);
+    }
+    setWaitingForData(false);
   };
 
   return (
@@ -44,6 +69,15 @@ const LoginForm = () => {
         <ErrorMessageStyle>
           <ErrorTextMessage>{inputDataError}</ErrorTextMessage>
         </ErrorMessageStyle>
+      )}
+
+      {waitingForData ? (
+        <WaitingDiv>
+          <WaitingText>Waiting...</WaitingText>
+          <Icon icon={faCircleNotch} className="fa-spin" />
+        </WaitingDiv>
+      ) : (
+        ""
       )}
     </Column>
   );
@@ -88,7 +122,28 @@ const Column = styled.div`
   align-content: space-around;
   height: 100%;
   justify-content: space-around;
-  /* justify-content: space-between; */
+`;
+
+const WaitingDiv = styled.div`
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  top: 0;
+  left: 0;
+`;
+
+const WaitingText = styled.h1`
+  color: #3454d6;
+`;
+
+const Icon = styled(FontAwesomeIcon)`
+  font-size: 8rem;
+  color: #3454d6;
 `;
 
 export default LoginForm;
