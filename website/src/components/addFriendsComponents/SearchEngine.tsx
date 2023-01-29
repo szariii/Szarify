@@ -2,7 +2,13 @@ import styled from "styled-components";
 import axios from "axios";
 import { useState } from "react";
 
-const SearchEngine = () => {
+
+//Redux
+import type { RootState } from "../../store/store";
+import { useSelector } from "react-redux";
+
+const SearchEngine = ({setFindedUsers,setFindingUsers}:SearchEngine) => {
+    const userData = useSelector((state: RootState) => state.userData);
     const [inputValue,setInputValue] = useState<string>("")
 
     const inputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) =>{
@@ -10,11 +16,17 @@ const SearchEngine = () => {
     }
 
   const searchHandler = async() => {
-    console.log(inputValue)
+    setFindingUsers(true)
     const sendData = {
         nick: inputValue
     }
-    const result = await axios.post("/findUsers",sendData)
+    const result = await axios.post("http://127.0.0.1:3000/findUsers",sendData)
+    console.log(result)
+    const data: Array<ShortedInfo> = result.data
+    const filteredResult = data.filter(ele=>ele.id!==userData.id)
+    console.log(filteredResult)
+    setFindedUsers(filteredResult)
+    setFindingUsers(false)
   };
 
   return (
@@ -56,5 +68,17 @@ const InputStyle = styled.input`
   height: 2rem;
   font-size: 1.5rem;
 `;
+
+interface ShortedInfo {
+    id:number
+    name:string
+    surname:string
+    nick:string
+}
+
+interface SearchEngine{
+   setFindedUsers: React.Dispatch<React.SetStateAction<ShortedInfo[]>>
+   setFindingUsers:React.Dispatch<React.SetStateAction<boolean>>
+}
 
 export default SearchEngine;
