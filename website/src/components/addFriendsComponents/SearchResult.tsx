@@ -21,69 +21,44 @@ const SearchResult = ({
           <Icon icon={faCircleNotch} className="fa-spin" />
         </WaitingDiv>
       ) : (
-        findedUsers.map((ele) => (
-          <>
+        <InsideBox>
+          {findedUsers.map((ele) => (
             <ListElement
               id={ele.id}
               name={ele.name}
               nick={ele.nick}
               surname={ele.surname}
             />
-            <ListElement
-              id={ele.id}
-              name={ele.name}
-              nick={ele.nick}
-              surname={ele.surname}
-            />
-            <ListElement
-              id={ele.id}
-              name={ele.name}
-              nick={ele.nick}
-              surname={ele.surname}
-            />
-            <ListElement
-              id={ele.id}
-              name={ele.name}
-              nick={ele.nick}
-              surname={ele.surname}
-            />
-            <ListElement
-              id={ele.id}
-              name={ele.name}
-              nick={ele.nick}
-              surname={ele.surname}
-            />
-            <ListElement
-              id={ele.id}
-              name={ele.name}
-              nick={ele.nick}
-              surname={ele.surname}
-            />
-            <ListElement
-              id={ele.id}
-              name={ele.name}
-              nick={ele.nick}
-              surname={ele.surname}
-            />
-            <ListElement
-              id={ele.id}
-              name={ele.name}
-              nick={ele.nick}
-              surname={ele.surname}
-            />
-          </>
-        ))
+          ))}
+        </InsideBox>
       )}
     </SearchResultStyle>
   );
 };
 
 const SearchResultStyle = styled.div`
-display: flex;
-flex-flow: column;
+  min-height: 60%;
+  width: 70%;
+`;
+
+const InsideBox = styled.div`
+  position: fixed;
+  max-height: 50%;
+  width: 70%;
   overflow-y: auto;
-  max-height: 500px;
+  white-space: nowrap;
   border: 2px solid black;
+
+  ::-webkit-scrollbar {
+    background-color: #e5e0ff;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #7286d3;
+    border-radius: 20px;
+  }
+
+  scrollbar-color: rgb(114, 134, 211);
 `;
 
 const WaitingDiv = styled.div`
