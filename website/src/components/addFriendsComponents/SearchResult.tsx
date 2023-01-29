@@ -24,6 +24,7 @@ const SearchResult = ({
         <InsideBox>
           {findedUsers.map((ele) => (
             <ListElement
+              key={ele.id}
               id={ele.id}
               name={ele.name}
               nick={ele.nick}

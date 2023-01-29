@@ -14,6 +14,7 @@ dotenv.config();
 const login = require("./modules/login");
 const register = require("./modules/register");
 const checkData = require("./modules/checkData");
+const findUser = require("./modules/findUser");
 
 //Here we are configuring express to use body-parser as middle-ware.
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -54,7 +55,6 @@ app.use(function (req, res, next) {
   next();
 });
 
-
 //Routes
 app.post("/checkData", (req, res) => checkData.checkData(req, res, connection));
 
@@ -64,24 +64,18 @@ app.post("/register", (req, res) => {
 
 app.post("/login", (req, res) => login.login(req, res, connection, bcrypt));
 
-app.post("/findUsers", (req,res)=>{
-  console.log(req.body)
-  const nick = req.body.nick
+app.post("/findUsers", (req, res) => findUser.findUser(req, res, connection));
 
-  const arr = nick.split(" ")
-  console.log(arr)
-  let sql = `SELECT id,name,surname,nick FROM users WHERE nick LIKE "${nick}%" OR name LIKE "${nick}%" OR surname LIKE "${nick}%"`
-  if(arr.length>1){
-    sql = `SELECT id,name,surname,nick FROM users WHERE nick LIKE "${nick}%" OR (name LIKE "${arr[0]}" AND surname LIKE "${arr[1]}%") OR (surname LIKE "${arr[1]}" AND name LIKE "${arr[0]}%")`
-  }
+app.post("/findUser", (req, res) => {
+  console.log(req.body);
+  const sql = `SELECT id,name,surname,nick FROM users WHERE id="${req.body.id}"`;
 
   connection.query(sql, (err, rows, fields) => {
     if (err) throw err;
-    console.log(rows)
-    res.send(rows)
+    console.log(rows);
+    res.send(rows[0]);
   });
-
-})
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
