@@ -35,9 +35,10 @@ const LoginForm = () => {
     );
     console.log(result);
     if (result.data.operation) {
+      console.log(result.data)
       dispatch(setUserData(result.data.data));
-      setWaitingForData(false);
       dispatch(change());
+      setWaitingForData(false);
       navigate("/main");
     } else {
       setInputDataError(result.data.errorMessage);

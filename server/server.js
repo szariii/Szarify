@@ -68,7 +68,7 @@ app.post("/findUsers", (req, res) => findUser.findUser(req, res, connection));
 
 app.post("/findUser", (req, res) => {
   console.log(req.body);
-  const sql = `SELECT id,name,surname,nick FROM users WHERE id="${req.body.id}"`;
+  const sql = `SELECT id,name,surname,nick,register_date,followed_persons,followers FROM users WHERE id="${req.body.id}"`;
 
   connection.query(sql, (err, rows, fields) => {
     if (err) throw err;
