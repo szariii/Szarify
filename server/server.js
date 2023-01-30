@@ -73,6 +73,15 @@ app.post("/findUser", (req, res) => {
   connection.query(sql, (err, rows, fields) => {
     if (err) throw err;
     console.log(rows);
+    const array = []
+    if(rows[0].followed_persons!==null){
+      rows[0].followed_persons.split(",").map(ele=>{
+        if(ele!==""){
+          array.push(parseInt(ele))
+        }
+      })
+    }
+    rows[0].followed_persons=array
     res.send(rows[0]);
   });
 });

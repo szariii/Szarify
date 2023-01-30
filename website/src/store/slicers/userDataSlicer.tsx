@@ -7,7 +7,7 @@ export interface UserData {
   email: string;
   phone: string;
   nick: string;
-  register_date:number
+  register_date:string
   followed_persons:Array<number>
   followers:number
 }
@@ -18,7 +18,7 @@ const initialState = {
   email: "",
   phone: "",
   nick: "",
-  register_date:-1,
+  register_date:"",
   followed_persons:[-1],
   followers:0
 };
@@ -43,7 +43,7 @@ const userDataSlicer = createSlice({
       state.email = ""
       state.phone = ""
       state.nick = ""
-      state.register_date=-1
+      state.register_date=""
       state.followed_persons=[-1]
       state.followers=0
     },

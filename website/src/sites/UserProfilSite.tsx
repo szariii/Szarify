@@ -17,7 +17,7 @@ const UserProfilSite = () => {
     name: "",
     surname: "",
     nick: "",
-    register_data:0,
+    register_date:"",
     followed_persons:[],
     followers:0
   });
@@ -33,6 +33,7 @@ const UserProfilSite = () => {
       id: id,
     };
     const result = await axios.post("http://127.0.0.1:3000/findUser", obj);
+    console.log(result.data)
     setUserInfo(result.data)
   };
 
@@ -76,7 +77,7 @@ interface ShortedInfo {
   name: string;
   surname: string;
   nick: string;
-  register_data:number
+  register_date:string
   followed_persons:Array<number>
   followers:number
 } 
