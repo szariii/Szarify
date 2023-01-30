@@ -14,6 +14,7 @@ dotenv.config();
 const login = require("./modules/login");
 const register = require("./modules/register");
 const checkData = require("./modules/checkData");
+const findUsers = require("./modules/findUsers");
 const findUser = require("./modules/findUser");
 
 //Here we are configuring express to use body-parser as middle-ware.
@@ -64,26 +65,14 @@ app.post("/register", (req, res) => {
 
 app.post("/login", (req, res) => login.login(req, res, connection, bcrypt));
 
-app.post("/findUsers", (req, res) => findUser.findUser(req, res, connection));
+app.post("/findUsers", (req, res) => findUsers.findUsers(req, res, connection));
 
-app.post("/findUser", (req, res) => {
+app.post("/findUser", (req, res) => findUser.findUser(req, res, connection));
+
+app.post("/followUser", (req, res) => {
   console.log(req.body);
-  const sql = `SELECT id,name,surname,nick,register_date,followed_persons,followers FROM users WHERE id="${req.body.id}"`;
-
-  connection.query(sql, (err, rows, fields) => {
-    if (err) throw err;
-    console.log(rows);
-    const array = []
-    if(rows[0].followed_persons!==null){
-      rows[0].followed_persons.split(",").map(ele=>{
-        if(ele!==""){
-          array.push(parseInt(ele))
-        }
-      })
-    }
-    rows[0].followed_persons=array
-    res.send(rows[0]);
-  });
+  const sql = `UPDATE users SET followed_persons=IFNULL(",1",CONCAT(followed_persons,",1"))`;
+  //UPDATE users SET followed_persons=IFNULL(",1",(CONCAT(followed_persons,",1")))
 });
 
 app.listen(port, () => {

@@ -10,6 +10,7 @@ import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 
 //Components
 import UserInformations from "../components/userProfilComponents/UserInformations";
+import UsersPosts from "../components/userProfilComponents/UsersPosts";
 
 const UserProfilSite = () => {
   const [userInfo, setUserInfo] = useState<ShortedInfo>({
@@ -46,6 +47,7 @@ const UserProfilSite = () => {
       ) : (
         <>
           <UserInformations userInfo={userInfo} setUserInfo={setUserInfo} />
+          <UsersPosts/>
         </>
       )}
     </UserProfilSiteStyle>
