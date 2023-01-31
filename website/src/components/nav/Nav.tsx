@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 //Redux
 import { useSelector, useDispatch } from "react-redux";
@@ -13,12 +14,17 @@ import logo from "../../img/logob.png";
 import NavButton from "./NavButton";
 
 const Nav = () => {
+  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
+  console.log("test");
+
   const navigate = useNavigate();
   const logginValue = useSelector((state: RootState) => state.login.value);
 
   const dispatch = useDispatch();
 
   const logOutFonction = () => {
+    console.log("teescik log out");
+    removeCookie("user", { path: "/" });
     dispatch(change());
     dispatch(unsetUserData());
     navigate("/");

@@ -24,11 +24,16 @@ const UserInformations = ({
     logedUserData.followed_persons.includes(userInfo.id)
   );
 
+  // useEffect(() => {
+  //   setFollowedUser(logedUserData.followed_persons.includes(userInfo.id));
+  // }, [logedUserData]);
+
   const followButtonClickHandler = async () => {
     const sendObj = {
       from: logedUserData.id,
       to: userInfo.id,
     };
+
     const result = await axios.post(
       "http://127.0.0.1:3000/followUser",
       sendObj
@@ -46,9 +51,6 @@ const UserInformations = ({
     changeData.followed_persons = changeData.followed_persons.filter((ele) => {
       ele !== userInfo.id;
     });
-    dispatch(setUserData(changeData));
-    setUserInfo({ ...userInfo, followers: userInfo.followers - 1 });
-    setFollowedUser(true);
 
     let str = "";
     changeData.followed_persons.map((ele) => (str += `,${ele.toString()}`));
@@ -64,6 +66,10 @@ const UserInformations = ({
       "http://127.0.0.1:3000/unfollowUser",
       sendObj
     );
+
+    dispatch(setUserData(changeData));
+    setUserInfo({ ...userInfo, followers: userInfo.followers - 1 });
+    setFollowedUser(true);
   };
 
   return (

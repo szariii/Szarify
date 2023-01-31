@@ -3,6 +3,7 @@ import styled from "styled-components";
 import LoginFormInput from "./LoginFormInput";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import useCookies from "react-cookie/cjs/useCookies";
 
 //Redux
 import type { RootState } from "../../store/store";
@@ -23,6 +24,8 @@ const LoginForm = () => {
     email: "",
   });
 
+  const [cookie, setCookie, removeCookie] = useCookies(["user"]);
+
   const userData = useSelector((state: RootState) => state.userData);
   const dispatch = useDispatch();
 
@@ -35,10 +38,11 @@ const LoginForm = () => {
     );
     console.log(result);
     if (result.data.operation) {
-      console.log(result.data)
+      console.log(result.data);
       dispatch(setUserData(result.data.data));
       dispatch(change());
       setWaitingForData(false);
+      setCookie("user", result.data.data.id, { path: "/" });
       navigate("/main");
     } else {
       setInputDataError(result.data.errorMessage);

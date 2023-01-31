@@ -16,6 +16,8 @@ const register = require("./modules/register");
 const checkData = require("./modules/checkData");
 const findUsers = require("./modules/findUsers");
 const findUser = require("./modules/findUser");
+const followUser = require("./modules/followUser")
+const unfollowUser = require("./modules/unfollowUser");
 
 //Here we are configuring express to use body-parser as middle-ware.
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -69,38 +71,30 @@ app.post("/findUsers", (req, res) => findUsers.findUsers(req, res, connection));
 
 app.post("/findUser", (req, res) => findUser.findUser(req, res, connection));
 
-app.post("/followUser", async (req, res) => {
-  console.log(req.body);
-  const sql = `UPDATE users SET followed_persons=CONCAT(IFNULL(followed_persons,""),",${req.body.to}") WHERE id = "${req.body.from}";`;
+app.post("/followUser",(req,res)=>followUser.followUser(req,res,connection))
+
+app.post("/unfollowUser",(req,res)=> unfollowUser.unfollowUser(req,res,connection))
+
+app.post("/getUserData",(req,res)=>{
+  const sql = `SELECT id,name,surname,email,phone,nick,register_date,followed_persons,followers FROM users WHERE id="${req.body.id}"`
   connection.query(sql, (err, rows, fields) => {
     if (err) throw err;
-    console.log(rows);
-    const sql1 = `UPDATE users SET followers=followers+1 WHERE id = "${req.body.to}"`;
-    console.log(sql1);
-    connection.query(sql1, (err, rows, fields) => {
-      if (err) throw err;
-      console.log(rows);
-      res.send("siema");
-    });
-  });
-  console.log("test");
 
-  //UPDATE users SET followed_persons=CONCAT(IFNULL(followed_persons,""),",1")
-  //UPDATE users SET followers=followers+1 WHERE id = "24"
-});
+    const array = []
+    if(rows[0].followed_persons!==null){
+      rows[0].followed_persons.split(",").map(ele=>{
+        if(ele!==""){
+          array.push(parseInt(ele))
+        }
+      })
+    }
 
-app.post("/unfollowUser", (req, res) => {
-  console.log(req.body.array);
-  const sql = `UPDATE users SET followed_persons="${req.body.array}" WHERE id = "${req.body.from}";`;
-  connection.query(sql, (err, rows, fields) => {
-    if (err) throw err;
-    const sql1 = `UPDATE users SET followers=followers-1 WHERE id = "${req.body.to}"`;
-    connection.query(sql1, (err, rows, fields) => {
-      if (err) throw err;
-      res.send("added");
-    });
+    let sendObj = JSON.parse(JSON.stringify(rows[0]))
+    sendObj.followed_persons = array
+
+    res.send(sendObj)
   });
-});
+})
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
