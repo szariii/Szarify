@@ -29,9 +29,6 @@ function App() {
   const dispatch = useDispatch();
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
   const userData = useSelector((state: RootState) => state.userData);
-
-  console.log(cookies);
-
   useEffect(() => {
     console.log(cookies.user);
     if (userData.id === -1 && cookies.user) {
@@ -51,7 +48,6 @@ function App() {
     );
     dispatch(setUserData(result.data));
     dispatch(change());
-    console.log(result);
   };
 
   return (

@@ -17,16 +17,16 @@ const UserInformations = ({
   const registerDate = `${registerTimestamp.getDate()}.${
     registerTimestamp.getMonth() + 1
   }.${registerTimestamp.getFullYear()}`;
-  console.log(registerDate);
 
   const logedUserData = useSelector((state: RootState) => state.userData);
   const [followedUser, setFollowedUser] = useState<boolean>(
     logedUserData.followed_persons.includes(userInfo.id)
   );
 
-  // useEffect(() => {
-  //   setFollowedUser(logedUserData.followed_persons.includes(userInfo.id));
-  // }, [logedUserData]);
+
+  useEffect(() => {
+    setFollowedUser(logedUserData.followed_persons.includes(userInfo.id));
+  }, [logedUserData]);
 
   const followButtonClickHandler = async () => {
     const sendObj = {
@@ -41,9 +41,9 @@ const UserInformations = ({
 
     const changeData: LogedUserData = JSON.parse(JSON.stringify(logedUserData));
     changeData.followed_persons.push(userInfo.id);
+    console.log(changeData);
     dispatch(setUserData(changeData));
     setUserInfo({ ...userInfo, followers: userInfo.followers + 1 });
-    setFollowedUser(false);
   };
 
   const unFollowButtonClickHandler = async () => {
@@ -54,7 +54,6 @@ const UserInformations = ({
 
     let str = "";
     changeData.followed_persons.map((ele) => (str += `,${ele.toString()}`));
-    console.log(str);
 
     const sendObj = {
       from: logedUserData.id,
@@ -69,7 +68,6 @@ const UserInformations = ({
 
     dispatch(setUserData(changeData));
     setUserInfo({ ...userInfo, followers: userInfo.followers - 1 });
-    setFollowedUser(true);
   };
 
   return (
@@ -84,7 +82,7 @@ const UserInformations = ({
         <h3>Registered at: {registerDate}</h3>
         <h3>followers: {userInfo.followers}</h3>
         <h3>followed people: {userInfo.followed_persons.length}</h3>
-        {followedUser ? (
+        {!followedUser ? (
           <>
             <ButtonStyle onClick={followButtonClickHandler}>Follow</ButtonStyle>
           </>
