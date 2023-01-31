@@ -11,9 +11,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { setUserData } from "../../store/slicers/userDataSlicer";
 import { change } from "../../store/slicers/loginSlicer";
 
-//FontAwasome
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
+//Helping components
+import WaitingDiv from "../helpingComponents/WaitingDiv";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -78,14 +77,7 @@ const LoginForm = () => {
         </ErrorMessageStyle>
       )}
 
-      {waitingForData ? (
-        <WaitingDiv>
-          <WaitingText>Waiting...</WaitingText>
-          <Icon icon={faCircleNotch} className="fa-spin" />
-        </WaitingDiv>
-      ) : (
-        ""
-      )}
+      {waitingForData ? <WaitingDiv /> : ""}
     </Column>
   );
 };
@@ -131,26 +123,26 @@ const Column = styled.div`
   justify-content: space-around;
 `;
 
-const WaitingDiv = styled.div`
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  top: 0;
-  left: 0;
-`;
+// const WaitingDiv = styled.div`
+//   position: absolute;
+//   width: 100vw;
+//   height: 100vh;
+//   background-color: rgba(0, 0, 0, 0.4);
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   flex-direction: column;
+//   top: 0;
+//   left: 0;
+// `;
 
-const WaitingText = styled.h1`
-  color: #3454d6;
-`;
+// const WaitingText = styled.h1`
+//   color: #3454d6;
+// `;
 
-const Icon = styled(FontAwesomeIcon)`
-  font-size: 8rem;
-  color: #3454d6;
-`;
+// const Icon = styled(FontAwesomeIcon)`
+//   font-size: 8rem;
+//   color: #3454d6;
+// `;
 
 export default LoginForm;

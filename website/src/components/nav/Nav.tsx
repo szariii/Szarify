@@ -34,12 +34,17 @@ const Nav = () => {
     navigate("/addFriends");
   };
 
+  const addPostHandler = () => {
+    navigate("/addPost");
+  };
+
   return (
     <NavStyle>
       <LogoImage src={logo} alt="Logo" />
       <Menu>
         {logginValue ? (
           <>
+            <NavButton action={addPostHandler} name="Add post" />
             <NavButton action={addFriendsHandler} name="Add friends" />
             <NavButton action={logOutFonction} name="Log out" />
           </>

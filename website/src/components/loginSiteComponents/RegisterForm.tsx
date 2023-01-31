@@ -2,15 +2,14 @@ import { useState } from "react";
 import styled from "styled-components";
 import axios, { AxiosError } from "axios";
 
-//FontAwasome
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
-
 //Components
 import FormInput from "./FormInput";
 import PasswordForm from "./PasswordForm";
 
-const RegisterForm = ({setLoginForm,loginForm}:RegisterForm) => {
+//Helping components
+import WaitingDiv from "../helpingComponents/WaitingDiv";
+
+const RegisterForm = ({ setLoginForm, loginForm }: RegisterForm) => {
   const [data, setData] = useState<FormData>({
     name: "",
     surname: "",
@@ -127,7 +126,7 @@ const RegisterForm = ({setLoginForm,loginForm}:RegisterForm) => {
           setPasswordForm={setPasswordForm}
           setInputDataError={setInputDataError}
           setWaitingForData={setWaitingForData}
-          setLoginForm={setLoginForm} 
+          setLoginForm={setLoginForm}
           loginForm={loginForm}
         />
       )}
@@ -138,14 +137,7 @@ const RegisterForm = ({setLoginForm,loginForm}:RegisterForm) => {
           <ErrorTextMessage>{inputDataError}</ErrorTextMessage>
         </ErrorMessageStyle>
       )}
-      {waitingForData ? (
-        <WaitingDiv>
-          <WaitingText>Waiting...</WaitingText>
-          <Icon icon={faCircleNotch} className="fa-spin" />
-        </WaitingDiv>
-      ) : (
-        ""
-      )}
+      {waitingForData ? <WaitingDiv /> : ""}
     </Column>
   );
 };
@@ -163,27 +155,7 @@ interface SendData {
   email: string;
 }
 
-const Icon = styled(FontAwesomeIcon)`
-  font-size: 8rem;
-  color: #3454d6;
-`;
 
-const WaitingDiv = styled.div`
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  top: 0;
-  left: 0;
-`;
-
-const WaitingText = styled.h1`
-  color: #3454d6;
-`;
 
 const ErrorMessageStyle = styled.div`
   border: 2px solid red;
@@ -225,9 +197,9 @@ const Column = styled.div`
   justify-content: space-around;
 `;
 
-interface RegisterForm{
-  setLoginForm:React.Dispatch<React.SetStateAction<boolean>>
-  loginForm:boolean
+interface RegisterForm {
+  setLoginForm: React.Dispatch<React.SetStateAction<boolean>>;
+  loginForm: boolean;
 }
 
 export default RegisterForm;
