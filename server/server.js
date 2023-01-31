@@ -16,8 +16,10 @@ const register = require("./modules/register");
 const checkData = require("./modules/checkData");
 const findUsers = require("./modules/findUsers");
 const findUser = require("./modules/findUser");
-const followUser = require("./modules/followUser")
+const followUser = require("./modules/followUser");
 const unfollowUser = require("./modules/unfollowUser");
+const getUserData = require("./modules/getUserData");
+const addPost = require("./modules/addPost");
 
 //Here we are configuring express to use body-parser as middle-ware.
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -71,30 +73,19 @@ app.post("/findUsers", (req, res) => findUsers.findUsers(req, res, connection));
 
 app.post("/findUser", (req, res) => findUser.findUser(req, res, connection));
 
-app.post("/followUser",(req,res)=>followUser.followUser(req,res,connection))
+app.post("/followUser", (req, res) =>
+  followUser.followUser(req, res, connection)
+);
 
-app.post("/unfollowUser",(req,res)=> unfollowUser.unfollowUser(req,res,connection))
+app.post("/unfollowUser", (req, res) =>
+  unfollowUser.unfollowUser(req, res, connection)
+);
 
-app.post("/getUserData",(req,res)=>{
-  const sql = `SELECT id,name,surname,email,phone,nick,register_date,followed_persons,followers FROM users WHERE id="${req.body.id}"`
-  connection.query(sql, (err, rows, fields) => {
-    if (err) throw err;
+app.post("/getUserData", (req, res) =>
+  getUserData.getUserData(req, res, connection)
+);
 
-    const array = []
-    if(rows[0].followed_persons!==null){
-      rows[0].followed_persons.split(",").map(ele=>{
-        if(ele!==""){
-          array.push(parseInt(ele))
-        }
-      })
-    }
-
-    let sendObj = JSON.parse(JSON.stringify(rows[0]))
-    sendObj.followed_persons = array
-
-    res.send(sendObj)
-  });
-})
+app.post("/addPost", (req, res) => addPost.addPost(req, res, connection));
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

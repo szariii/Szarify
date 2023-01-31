@@ -123,26 +123,5 @@ const Column = styled.div`
   justify-content: space-around;
 `;
 
-// const WaitingDiv = styled.div`
-//   position: absolute;
-//   width: 100vw;
-//   height: 100vh;
-//   background-color: rgba(0, 0, 0, 0.4);
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   flex-direction: column;
-//   top: 0;
-//   left: 0;
-// `;
-
-// const WaitingText = styled.h1`
-//   color: #3454d6;
-// `;
-
-// const Icon = styled(FontAwesomeIcon)`
-//   font-size: 8rem;
-//   color: #3454d6;
-// `;
 
 export default LoginForm;
