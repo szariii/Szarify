@@ -33,6 +33,7 @@ const AddPostSite = () => {
   };
 
   const thanksHandler = () => {
+    setText("")
     setThanks(false);
   };
 

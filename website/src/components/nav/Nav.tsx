@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { Link } from "react-router-dom";
 
 //Redux
 import { useSelector, useDispatch } from "react-redux";
@@ -40,7 +41,13 @@ const Nav = () => {
 
   return (
     <NavStyle>
-      <LogoImage src={logo} alt="Logo" />
+      {logginValue ? (
+        <LinkStyle to={"/main"}>
+          <LogoImage src={logo} alt="Logo" />
+        </LinkStyle>
+      ) : (
+        <LogoImage src={logo} alt="Logo" />
+      )}
       <Menu>
         {logginValue ? (
           <>
@@ -55,6 +62,13 @@ const Nav = () => {
     </NavStyle>
   );
 };
+
+const LinkStyle = styled(Link)`
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const LogoImage = styled.img`
   height: 80%;

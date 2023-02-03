@@ -7,7 +7,6 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 
-
 //Components
 import UserInformations from "../components/userProfilComponents/UserInformations";
 import UsersPosts from "../components/userProfilComponents/UsersPosts";
@@ -18,10 +17,11 @@ const UserProfilSite = () => {
     name: "",
     surname: "",
     nick: "",
-    register_date:"",
-    followed_persons:[],
-    followers:0
+    register_date: "",
+    followed_persons: [],
+    followers: 0,
   });
+  const [posts,setPosts]=useState<Array<Post>>([])
   const { id } = useParams();
   console.log(id);
 
@@ -29,13 +29,24 @@ const UserProfilSite = () => {
     getData();
   }, []);
 
+  let sendPostData={
+    id:id,
+    limit:5
+  }
+
   const getData = async () => {
     const obj = {
       id: id,
     };
     const result = await axios.post("http://127.0.0.1:3000/findUser", obj);
-    console.log(result.data)
-    setUserInfo(result.data)
+    console.log(result.data);
+    setUserInfo(result.data);
+
+    const postsResult = await axios.get("http://127.0.0.1:3000/getUserPosts", {
+      params: sendPostData,
+    });    
+    setPosts(postsResult.data)
+    console.log(postsResult);
   };
 
   return (
@@ -47,7 +58,7 @@ const UserProfilSite = () => {
       ) : (
         <>
           <UserInformations userInfo={userInfo} setUserInfo={setUserInfo} />
-          <UsersPosts/>
+          <UsersPosts posts={posts} setPosts={setPosts} authorName={userInfo.nick} authorId={userInfo.id} />
         </>
       )}
     </UserProfilSiteStyle>
@@ -79,7 +90,16 @@ interface ShortedInfo {
   name: string;
   surname: string;
   nick: string;
-  register_date:string
-  followed_persons:Array<number>
-  followers:number
-} 
+  register_date: string;
+  followed_persons: Array<number>;
+  followers: number;
+}
+
+interface Post{
+  id:number
+  timestamp:string
+  text:string
+  likes:Array<number>
+  nick:string
+  author_id:number
+}

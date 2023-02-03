@@ -20,6 +20,9 @@ const followUser = require("./modules/followUser");
 const unfollowUser = require("./modules/unfollowUser");
 const getUserData = require("./modules/getUserData");
 const addPost = require("./modules/addPost");
+const getUserPosts = require("./modules/getUserPosts");
+const likePost = require("./modules/likePost")
+const dislikePost =require("./modules/dislikePost")
 
 //Here we are configuring express to use body-parser as middle-ware.
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -86,6 +89,16 @@ app.post("/getUserData", (req, res) =>
 );
 
 app.post("/addPost", (req, res) => addPost.addPost(req, res, connection));
+
+app.get("/getUserPosts", (req, res) =>
+  getUserPosts.getUserPosts(req, res, connection)
+);
+
+app.put("/likePost",(req,res)=>likePost.likePost(req,res,connection))
+
+app.put("/dislikePost",(req,res)=>dislikePost.dislikePost(req,res,connection))
+
+app.put("/dislikePost",(req,res)=> dislikePost.dislikePost(req,res,connection))
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
