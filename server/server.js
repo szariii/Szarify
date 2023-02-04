@@ -98,8 +98,48 @@ app.put("/likePost",(req,res)=>likePost.likePost(req,res,connection))
 
 app.put("/dislikePost",(req,res)=>dislikePost.dislikePost(req,res,connection))
 
-app.put("/dislikePost",(req,res)=> dislikePost.dislikePost(req,res,connection))
+//app.put("/dislikePost",(req,res)=> dislikePost.dislikePost(req,res,connection))
+
+app.get("/getPosts",(req,res)=>{
+  if(req.query.array!==undefined){
+    let sql=`SELECT posts.id as id,author_id,text,posts.timestamp as timestamp,likes,nick FROM posts INNER JOIN users WHERE users.id=posts.author_id AND (`
+    req.query.array.map((ele,index)=>{
+      if(index===0){
+        sql+=` author_id=${ele}`
+      }else{
+        sql+=` OR  author_id=${ele}`
+      }
+      
+    })
+    sql+=`)`
+
+    connection.query(sql, (err, rows, fields) => {
+      if (err) throw err;
+      console.log(rows);
+      let sendObj = rows;
+      sendObj.map((row, index) => {
+        if (row.likes === null) {
+          sendObj[index].likes = [];
+        } else {
+          let arr = [];
+          row.likes.split(",").map((ele) => {
+            if (ele !== "") {
+              arr.push(parseInt(ele));
+            }
+          });
+          sendObj[index].likes = arr;
+        }
+      });
+      res.send(sendObj);
+    });
+
+  }else{
+    res.send([])
+  }
+  
+})
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
+
 });

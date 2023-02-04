@@ -4,7 +4,7 @@ import axios from "axios";
 
 //Redux
 import type { RootState } from "../store/store";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 //Helping components
 import WaitingDiv from "../components/helpingComponents/WaitingDiv";
