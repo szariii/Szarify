@@ -30,33 +30,36 @@ const MainSite = () => {
       params: sendObj,
     });
     console.log(result);
-    console.log(result.data)
-    const array = [...posts]
-    result.data.map((ele: PostInterface) =>array.push(ele))
-    setPosts(array)
-    //setPosts(result.data);
+    console.log(result.data);
+    const array = [...posts];
+    result.data.map((ele: PostInterface) => array.push(ele));
+    setPosts(array);
   };
 
   return (
     <div>
       <TitleText>Your board</TitleText>
       <PostsContainer>
-        {posts.map((ele, index) => (
-          <Post
-            key={ele.id}
-            posts={posts}
-            setPosts={setPosts}
-            id={ele.id}
-            author={ele.nick}
-            authorId={ele.author_id}
-            text={ele.text}
-            likes={ele.likes}
-            timestamp={ele.timestamp}
-            index={index}
-            limit={limit}
-            setLimit={setLimit}
-          />
-        ))}
+        {posts.length === 0 ? (
+          <p>No posts. Add more friends</p>
+        ) : (
+          posts.map((ele, index) => (
+            <Post
+              key={ele.id}
+              posts={posts}
+              setPosts={setPosts}
+              id={ele.id}
+              author={ele.nick}
+              authorId={ele.author_id}
+              text={ele.text}
+              likes={ele.likes}
+              timestamp={ele.timestamp}
+              index={index}
+              limit={limit}
+              setLimit={setLimit}
+            />
+          ))
+        )}
       </PostsContainer>
     </div>
   );

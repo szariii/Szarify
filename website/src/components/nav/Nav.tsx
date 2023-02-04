@@ -20,6 +20,7 @@ const Nav = () => {
 
   const navigate = useNavigate();
   const logginValue = useSelector((state: RootState) => state.login.value);
+  const loginedUser = useSelector((state: RootState) => state.userData);
 
   const dispatch = useDispatch();
 
@@ -39,6 +40,10 @@ const Nav = () => {
     navigate("/addPost");
   };
 
+  const yourAccount = () => {
+    navigate(`/user/${loginedUser.id}`);
+  };
+
   return (
     <NavStyle>
       {logginValue ? (
@@ -51,6 +56,7 @@ const Nav = () => {
       <Menu>
         {logginValue ? (
           <>
+            <NavButton action={yourAccount} name="Your account" />
             <NavButton action={addPostHandler} name="Add post" />
             <NavButton action={addFriendsHandler} name="Add friends" />
             <NavButton action={logOutFonction} name="Log out" />

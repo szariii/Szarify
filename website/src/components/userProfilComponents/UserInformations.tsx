@@ -28,10 +28,7 @@ const UserInformations = ({
   if (dd < 10) showeddd = "0" + dd;
   if (mm < 10) showedmm = "0" + mm;
 
-  const registerDate = `${showeddd}.${showedmm}.${yyyy}`
-
-
-
+  const registerDate = `${showeddd}.${showedmm}.${yyyy}`;
 
   const logedUserData = useSelector((state: RootState) => state.userData);
   const [followedUser, setFollowedUser] = useState<boolean>(
@@ -97,10 +94,14 @@ const UserInformations = ({
         </HeaderTextStyle>
       </Row>
       <Row>
-        <h3>Registered at: {registerDate}</h3>
-        <h3>followers: {userInfo.followers}</h3>
-        <h3>followed people: {userInfo.followed_persons.length}</h3>
-        {!followedUser ? (
+        <h3 style={{ flexGrow: 1, textAlign:"center" }}>Registered at: {registerDate}</h3>
+        <h3 style={{ flexGrow: 1, textAlign:"center" }}>followers: {userInfo.followers}</h3>
+        <h3 style={{ flexGrow: 1, textAlign:"center" }}>
+          followed people: {userInfo.followed_persons.length}
+        </h3>
+        {logedUserData.id === userInfo.id ? (
+          ""
+        ) : !followedUser ? (
           <>
             <ButtonStyle onClick={followButtonClickHandler}>Follow</ButtonStyle>
           </>
@@ -111,6 +112,7 @@ const UserInformations = ({
             </UnFollowButtonStyle>
           </>
         )}
+        {}
       </Row>
     </Column>
   );
@@ -124,6 +126,7 @@ const ButtonStyle = styled.button`
   border-color: #8ea7e9;
   color: #e5e0ff;
   font-size: 1rem;
+  flex-grow: 1;
   :hover {
     cursor: pointer;
   }
@@ -137,6 +140,7 @@ const UnFollowButtonStyle = styled.button`
   border-color: #e5e0ff;
   color: #8ea7e9;
   font-size: 1rem;
+  flex-grow: 1;
   :hover {
     cursor: pointer;
   }

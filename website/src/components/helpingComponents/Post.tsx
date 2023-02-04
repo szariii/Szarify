@@ -110,8 +110,9 @@ const Post = ({
         <DataStyled>{formatedDate}</DataStyled>
       </div>
       <TextDivStyle>
-        <p>{text}</p>
+        <p style={{ overflowWrap: "break-word" }}>{text}</p>
       </TextDivStyle>
+
       <LikeDivStyled>
         {liked ? (
           <IconStyle onClick={disLikeHandler} icon={faHeart} />
