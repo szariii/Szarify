@@ -12,6 +12,7 @@ import UserInformations from "../components/userProfilComponents/UserInformation
 import UsersPosts from "../components/userProfilComponents/UsersPosts";
 
 const UserProfilSite = () => {
+  const [limit,setLimit] = useState<number>(5)
   const [userInfo, setUserInfo] = useState<ShortedInfo>({
     id: -1,
     name: "",
@@ -29,10 +30,11 @@ const UserProfilSite = () => {
     getData();
   }, []);
 
-  let sendPostData={
-    id:id,
-    limit:5
-  }
+  useEffect(()=>{
+    getPosts(limit)
+  },[limit])
+
+
 
   const getData = async () => {
     const obj = {
@@ -42,12 +44,24 @@ const UserProfilSite = () => {
     console.log(result.data);
     setUserInfo(result.data);
 
+
+  };
+
+  const getPosts=async(limit:number)=>{
+
+    let sendPostData={
+      id:id,
+      limit:limit
+    }
+
     const postsResult = await axios.get("http://127.0.0.1:3000/getUserPosts", {
       params: sendPostData,
     });    
-    setPosts(postsResult.data)
-    console.log(postsResult);
-  };
+
+    const array = [...posts]
+    postsResult.data.map((ele: Post) =>array.push(ele))
+    setPosts(array)
+  }
 
   return (
     <UserProfilSiteStyle>
@@ -58,7 +72,7 @@ const UserProfilSite = () => {
       ) : (
         <>
           <UserInformations userInfo={userInfo} setUserInfo={setUserInfo} />
-          <UsersPosts posts={posts} setPosts={setPosts} authorName={userInfo.nick} authorId={userInfo.id} />
+          <UsersPosts posts={posts} setPosts={setPosts} authorName={userInfo.nick} authorId={userInfo.id} limit={limit} setLimit={setLimit} />
         </>
       )}
     </UserProfilSiteStyle>

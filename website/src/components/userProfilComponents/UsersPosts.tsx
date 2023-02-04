@@ -6,10 +6,12 @@ const UsersPosts = ({
   setPosts,
   authorName,
   authorId,
+  limit,
+  setLimit
 }: UserPostsInterface) => {
   return (
     <PostsContainer>
-      {posts.map((ele) => (
+      {posts.map((ele,index) => (
         <Post
           key={ele.id}
           id={ele.id}
@@ -20,6 +22,9 @@ const UsersPosts = ({
           authorId={authorId}
           posts={posts}
           setPosts={setPosts}
+          index={index}
+          limit={limit}
+          setLimit={setLimit}
         />
       ))}
     </PostsContainer>
@@ -40,6 +45,8 @@ interface UserPostsInterface {
   setPosts: React.Dispatch<React.SetStateAction<PostInterface[]>>;
   authorName: string;
   authorId: number;
+  limit:number
+  setLimit:React.Dispatch<React.SetStateAction<number>>
 }
 
 interface PostInterface {

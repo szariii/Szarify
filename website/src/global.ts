@@ -17,6 +17,14 @@ input::-webkit-outer-spin-button,
 
 html{
     font-size: 20px;
+    ::-webkit-scrollbar {
+    background-color: #e5e0ff;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #7286d3;
+    border-radius: 20px;
+  }
 }
 
 h1{

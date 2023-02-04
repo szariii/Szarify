@@ -13,16 +13,30 @@ const UserInformations = ({
 }: UserInformationsInterface) => {
   const dispatch = useDispatch();
 
-  const registerTimestamp = new Date(userInfo.register_date);
-  const registerDate = `${registerTimestamp.getDate()}.${
-    registerTimestamp.getMonth() + 1
-  }.${registerTimestamp.getFullYear()}`;
+  //const registerTimestamp = new Date(userInfo.register_date);
+
+  const date = new Date(userInfo.register_date);
+  const yyyy = date.getFullYear();
+  const mm = date.getMonth() + 1;
+  const dd = date.getDate();
+  const hh = date.getHours();
+  const minutes = date.getMinutes();
+
+  let showeddd = dd.toString();
+  let showedmm = mm.toString();
+
+  if (dd < 10) showeddd = "0" + dd;
+  if (mm < 10) showedmm = "0" + mm;
+
+  const registerDate = `${showeddd}.${showedmm}.${yyyy}`
+
+
+
 
   const logedUserData = useSelector((state: RootState) => state.userData);
   const [followedUser, setFollowedUser] = useState<boolean>(
     logedUserData.followed_persons.includes(userInfo.id)
   );
-
 
   useEffect(() => {
     setFollowedUser(logedUserData.followed_persons.includes(userInfo.id));
@@ -47,10 +61,12 @@ const UserInformations = ({
   };
 
   const unFollowButtonClickHandler = async () => {
+    console.log(logedUserData);
     const changeData: LogedUserData = JSON.parse(JSON.stringify(logedUserData));
-    changeData.followed_persons = changeData.followed_persons.filter((ele) => {
-      ele !== userInfo.id;
-    });
+    console.log(userInfo.id);
+    changeData.followed_persons = logedUserData.followed_persons.filter(
+      (ele) => ele !== userInfo.id
+    );
 
     let str = "";
     changeData.followed_persons.map((ele) => (str += `,${ele.toString()}`));
@@ -60,6 +76,8 @@ const UserInformations = ({
       to: userInfo.id,
       array: str,
     };
+
+    console.log(changeData);
 
     const result = await axios.post(
       "http://127.0.0.1:3000/unfollowUser",

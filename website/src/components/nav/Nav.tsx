@@ -79,7 +79,11 @@ const NavStyle = styled.div`
   justify-content: space-between;
   align-items: center;
   background-color: #e5e0ff;
-  height: 8%;
+  height: 8vh;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  left: 0;
 `;
 
 const Menu = styled.div`

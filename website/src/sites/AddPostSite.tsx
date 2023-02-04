@@ -33,7 +33,7 @@ const AddPostSite = () => {
   };
 
   const thanksHandler = () => {
-    setText("")
+    setText("");
     setThanks(false);
   };
 
@@ -124,7 +124,7 @@ const TextareaStyle = styled.textarea`
 
 const AddPostSiteStyle = styled.div`
   width: 100%;
-  height: 92%;
+  height: 92vh;
   display: flex;
   align-items: center;
   justify-content: center;

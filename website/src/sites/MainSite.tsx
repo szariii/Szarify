@@ -12,30 +12,36 @@ import styled from "styled-components";
 const MainSite = () => {
   const userData = useSelector((state: RootState) => state.userData);
   const [posts, setPosts] = useState<Array<PostInterface>>([]);
+  const [limit, setLimit] = useState<number>(5);
 
   useEffect(() => {
-    console.log(userData)
-    getData();
-  }, [userData]);
+    console.log(userData);
+    getData(limit);
+  }, [userData, limit]);
 
-  const getData = async () => {
+  const getData = async (limit: number) => {
     const sendObj = {
       array: userData.followed_persons,
+      limit: limit,
     };
-    console.log(sendObj)
+    console.log(sendObj);
 
     const result = await axios.get("http://127.0.0.1:3000/getPosts", {
       params: sendObj,
     });
     console.log(result);
-    setPosts(result.data);
+    console.log(result.data)
+    const array = [...posts]
+    result.data.map((ele: PostInterface) =>array.push(ele))
+    setPosts(array)
+    //setPosts(result.data);
   };
 
   return (
     <div>
-      <p>main</p>
+      <TitleText>Your board</TitleText>
       <PostsContainer>
-        {posts.map((ele) => (
+        {posts.map((ele, index) => (
           <Post
             key={ele.id}
             posts={posts}
@@ -46,12 +52,19 @@ const MainSite = () => {
             text={ele.text}
             likes={ele.likes}
             timestamp={ele.timestamp}
+            index={index}
+            limit={limit}
+            setLimit={setLimit}
           />
         ))}
       </PostsContainer>
     </div>
   );
 };
+
+const TitleText = styled.h2`
+  text-align: center;
+`;
 
 const PostsContainer = styled.div`
   display: flex;

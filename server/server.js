@@ -21,8 +21,8 @@ const unfollowUser = require("./modules/unfollowUser");
 const getUserData = require("./modules/getUserData");
 const addPost = require("./modules/addPost");
 const getUserPosts = require("./modules/getUserPosts");
-const likePost = require("./modules/likePost")
-const dislikePost =require("./modules/dislikePost")
+const likePost = require("./modules/likePost");
+const dislikePost = require("./modules/dislikePost");
 
 //Here we are configuring express to use body-parser as middle-ware.
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -94,24 +94,25 @@ app.get("/getUserPosts", (req, res) =>
   getUserPosts.getUserPosts(req, res, connection)
 );
 
-app.put("/likePost",(req,res)=>likePost.likePost(req,res,connection))
+app.put("/likePost", (req, res) => likePost.likePost(req, res, connection));
 
-app.put("/dislikePost",(req,res)=>dislikePost.dislikePost(req,res,connection))
+app.put("/dislikePost", (req, res) =>
+  dislikePost.dislikePost(req, res, connection)
+);
 
 //app.put("/dislikePost",(req,res)=> dislikePost.dislikePost(req,res,connection))
 
-app.get("/getPosts",(req,res)=>{
-  if(req.query.array!==undefined){
-    let sql=`SELECT posts.id as id,author_id,text,posts.timestamp as timestamp,likes,nick FROM posts INNER JOIN users WHERE users.id=posts.author_id AND (`
-    req.query.array.map((ele,index)=>{
-      if(index===0){
-        sql+=` author_id=${ele}`
-      }else{
-        sql+=` OR  author_id=${ele}`
+app.get("/getPosts", (req, res) => {
+  if (req.query.array !== undefined) {
+    let sql = `SELECT posts.id as id,author_id,text,posts.timestamp as timestamp,likes,nick FROM posts INNER JOIN users WHERE users.id=posts.author_id AND (`;
+    req.query.array.map((ele, index) => {
+      if (index === 0) {
+        sql += ` author_id=${ele}`;
+      } else {
+        sql += ` OR  author_id=${ele}`;
       }
-      
-    })
-    sql+=`)`
+    });
+    sql += `) ORDER BY posts.timestamp DESC LIMIT ${req.query.limit-5}, 5`;
 
     connection.query(sql, (err, rows, fields) => {
       if (err) throw err;
@@ -132,14 +133,11 @@ app.get("/getPosts",(req,res)=>{
       });
       res.send(sendObj);
     });
-
-  }else{
-    res.send([])
+  } else {
+    res.send([]);
   }
-  
-})
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
-
 });

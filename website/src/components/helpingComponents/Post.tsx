@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 
 //Fontawasome
@@ -12,6 +12,8 @@ import { faHeart as emptyHeart } from "@fortawesome/free-regular-svg-icons";
 import type { RootState } from "../../store/store";
 import { useSelector } from "react-redux";
 
+import useOnScreen from "../hooks/useOnScreen";
+
 const Post = ({
   id,
   author,
@@ -21,12 +23,18 @@ const Post = ({
   authorId,
   posts,
   setPosts,
+  limit,
+  setLimit,
+  index,
 }: PostInterface) => {
+  const ref = useRef(null);
+  const isVisible = useOnScreen(ref);
+  console.log(isVisible);
   const logedUserData = useSelector((state: RootState) => state.userData);
   const [liked, setLiked] = useState(likes.includes(logedUserData.id));
   const date = new Date(timestamp);
   const yyyy = date.getFullYear();
-  const mm = date.getMonth() + 1; // Months start at 0!
+  const mm = date.getMonth() + 1;
   const dd = date.getDate();
   const hh = date.getHours();
   const minutes = date.getMinutes();
@@ -40,6 +48,12 @@ const Post = ({
   const formatedDate = `${showeddd}.${showedmm}.${yyyy} ${hh}:${minutes}`;
 
   const countLikes = likes.length;
+
+  useEffect(() => {
+    if (limit - 1 === index && isVisible === true) {
+      setLimit(limit + 5);
+    }
+  }, [isVisible]);
 
   const likeHandler = () => {
     const sendObj = {
@@ -73,7 +87,9 @@ const Post = ({
     setPosts(newArray);
 
     let str = "";
-    newArray.map((ele) => ele.id===id?(ele.likes.map(num=>str+=`,${num}`)):{});
+    newArray.map((ele) =>
+      ele.id === id ? ele.likes.map((num) => (str += `,${num}`)) : {}
+    );
 
     console.log(str);
 
@@ -86,7 +102,7 @@ const Post = ({
   };
 
   return (
-    <PostStyled>
+    <PostStyled ref={ref}>
       <div>
         <LinkStyled to={`/user/${authorId}`}>
           <h3>{author}</h3>
@@ -163,6 +179,9 @@ interface PostInterface {
   authorId: number;
   posts: Array<Post>;
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
+  limit: number;
+  setLimit: React.Dispatch<React.SetStateAction<number>>;
+  index: number;
 }
 
 export default Post;

@@ -30,7 +30,7 @@ const AddFriendsSiteStyle = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 92%;
+  height: 92vh;
 `;
 
 export default AddFriendsSite;
