@@ -23,6 +23,7 @@ const addPost = require("./modules/addPost");
 const getUserPosts = require("./modules/getUserPosts");
 const likePost = require("./modules/likePost");
 const dislikePost = require("./modules/dislikePost");
+const getPosts = require("./modules/getPosts");
 
 //Here we are configuring express to use body-parser as middle-ware.
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -64,27 +65,27 @@ app.use(function (req, res, next) {
 });
 
 //Routes
-app.post("/checkData", (req, res) => checkData.checkData(req, res, connection));
+app.get("/checkData", (req, res) => checkData.checkData(req, res, connection));
 
 app.post("/register", (req, res) => {
   register.register(req, res, connection, bcrypt, saltRounds);
 });
 
-app.post("/login", (req, res) => login.login(req, res, connection, bcrypt));
+app.get("/login", (req, res) => login.login(req, res, connection, bcrypt));
 
-app.post("/findUsers", (req, res) => findUsers.findUsers(req, res, connection));
+app.get("/findUsers", (req, res) => findUsers.findUsers(req, res, connection));
 
-app.post("/findUser", (req, res) => findUser.findUser(req, res, connection));
+app.get("/findUser", (req, res) => findUser.findUser(req, res, connection));
 
-app.post("/followUser", (req, res) =>
+app.put("/followUser", (req, res) =>
   followUser.followUser(req, res, connection)
 );
 
-app.post("/unfollowUser", (req, res) =>
+app.put("/unfollowUser", (req, res) =>
   unfollowUser.unfollowUser(req, res, connection)
 );
 
-app.post("/getUserData", (req, res) =>
+app.get("/getUserData", (req, res) =>
   getUserData.getUserData(req, res, connection)
 );
 
@@ -100,43 +101,7 @@ app.put("/dislikePost", (req, res) =>
   dislikePost.dislikePost(req, res, connection)
 );
 
-//app.put("/dislikePost",(req,res)=> dislikePost.dislikePost(req,res,connection))
-
-app.get("/getPosts", (req, res) => {
-  if (req.query.array !== undefined) {
-    let sql = `SELECT posts.id as id,author_id,text,posts.timestamp as timestamp,likes,nick FROM posts INNER JOIN users WHERE users.id=posts.author_id AND (`;
-    req.query.array.map((ele, index) => {
-      if (index === 0) {
-        sql += ` author_id=${ele}`;
-      } else {
-        sql += ` OR  author_id=${ele}`;
-      }
-    });
-    sql += `) ORDER BY posts.timestamp DESC LIMIT ${req.query.limit-5}, 5`;
-
-    connection.query(sql, (err, rows, fields) => {
-      if (err) throw err;
-      console.log(rows);
-      let sendObj = rows;
-      sendObj.map((row, index) => {
-        if (row.likes === null) {
-          sendObj[index].likes = [];
-        } else {
-          let arr = [];
-          row.likes.split(",").map((ele) => {
-            if (ele !== "") {
-              arr.push(parseInt(ele));
-            }
-          });
-          sendObj[index].likes = arr;
-        }
-      });
-      res.send(sendObj);
-    });
-  } else {
-    res.send([]);
-  }
-});
+app.get("/getPosts", (req, res) => getPosts.getPosts(req, res, connection));
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

@@ -1,6 +1,5 @@
 const findUser = (req, res, connection) => {
-  console.log(req.body);
-  const sql = `SELECT id,name,surname,nick,register_date,followed_persons,followers FROM users WHERE id="${req.body.id}"`;
+  const sql = `SELECT id,name,surname,nick,register_date,followed_persons,followers FROM users WHERE id="${req.query.id}"`;
 
   connection.query(sql, (err, rows, fields) => {
     if (err) throw err;

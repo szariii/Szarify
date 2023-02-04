@@ -45,7 +45,7 @@ const UserInformations = ({
       to: userInfo.id,
     };
 
-    const result = await axios.post(
+    const result = await axios.put(
       "http://127.0.0.1:3000/followUser",
       sendObj
     );
@@ -76,7 +76,7 @@ const UserInformations = ({
 
     console.log(changeData);
 
-    const result = await axios.post(
+    const result = await axios.put(
       "http://127.0.0.1:3000/unfollowUser",
       sendObj
     );

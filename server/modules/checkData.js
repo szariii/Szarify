@@ -1,7 +1,6 @@
-const checkData = (req, res,connection) => {
-  console.log(req.body);
-  const email = req.body.email;
-  const nick = req.body.nick;
+const checkData = (req, res, connection) => {
+  const email = req.query.email;
+  const nick = req.query.nick;
   const sql =
     'SELECT `email`,`nick` FROM `users` WHERE `email`="' +
     email +
@@ -34,4 +33,4 @@ const checkData = (req, res,connection) => {
   });
 };
 
-module.exports={checkData}
+module.exports = { checkData };

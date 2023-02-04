@@ -40,7 +40,7 @@ const UserProfilSite = () => {
     const obj = {
       id: id,
     };
-    const result = await axios.post("http://127.0.0.1:3000/findUser", obj);
+    const result = await axios.get("http://127.0.0.1:3000/findUser", {params:obj});
     console.log(result.data);
     setUserInfo(result.data);
 

@@ -50,9 +50,9 @@ const RegisterForm = ({ setLoginForm, loginForm }: RegisterForm) => {
         nick: data.nick,
       };
       try {
-        const result = await axios.post(
+        const result = await axios.get(
           "http://127.0.0.1:3000/checkData",
-          sendData
+          {params:sendData}
         );
 
         console.log(result);

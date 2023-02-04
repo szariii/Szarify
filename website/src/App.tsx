@@ -43,9 +43,9 @@ function App() {
       id: cookies.user,
     };
 
-    const result = await axios.post(
+    const result = await axios.get(
       "http://127.0.0.1:3000/getUserData",
-      dataToSend
+      {params:dataToSend}
     );
     dispatch(setUserData(result.data));
     dispatch(change());

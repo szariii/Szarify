@@ -47,10 +47,6 @@ const LoginSiteStyle = styled.div`
   height: 100%;
 `;
 
-// const RegisterFormStyle = styled(RegisterForm)`
-//   width: 80%;
-// `;
-
 const InfoPanel = styled.div`
   display: flex;
   flex-direction: column;

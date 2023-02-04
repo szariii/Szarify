@@ -31,9 +31,9 @@ const LoginForm = () => {
   const loginHandler = async () => {
     setInputDataError("");
     setWaitingForData(true);
-    const result = await axios.post(
+    const result = await axios.get(
       "http://127.0.0.1:3000/login",
-      loginFormData
+      {params:loginFormData}
     );
     console.log(result);
     if (result.data.operation) {

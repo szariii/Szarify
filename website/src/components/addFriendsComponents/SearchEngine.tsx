@@ -20,7 +20,7 @@ const SearchEngine = ({setFindedUsers,setFindingUsers}:SearchEngine) => {
     const sendData = {
         nick: inputValue
     }
-    const result = await axios.post("http://127.0.0.1:3000/findUsers",sendData)
+    const result = await axios.get("http://127.0.0.1:3000/findUsers",{params:sendData})
     console.log(result)
     const data: Array<ShortedInfo> = result.data
     const filteredResult = data.filter(ele=>ele.id!==userData.id)

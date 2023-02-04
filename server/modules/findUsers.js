@@ -1,6 +1,6 @@
 const findUsers=(req,res,connection)=>{
     console.log(req.body)
-    const nick = req.body.nick
+    const nick = req.query.nick
   
     const arr = nick.split(" ")
     console.log(arr)

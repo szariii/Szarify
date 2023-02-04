@@ -1,5 +1,5 @@
 const getUserData = (req, res, connection) => {
-  const sql = `SELECT id,name,surname,email,phone,nick,register_date,followed_persons,followers FROM users WHERE id="${req.body.id}"`;
+  const sql = `SELECT id,name,surname,email,phone,nick,register_date,followed_persons,followers FROM users WHERE id="${req.query.id}"`;
   connection.query(sql, (err, rows, fields) => {
     if (err) throw err;
 

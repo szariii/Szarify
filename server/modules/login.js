@@ -1,6 +1,5 @@
 const login = (req,res,connection,bcrypt)=> {
-  console.log(req.body);
-  const sql = `SELECT * FROM users WHERE email="${req.body.email}"`;
+  const sql = `SELECT * FROM users WHERE email="${req.query.email}"`;
   connection.query(sql, (err, rows, fields) => {
     if (err) throw err;
     let obj = {
@@ -16,7 +15,7 @@ const login = (req,res,connection,bcrypt)=> {
     }
     console.log("go");
 
-    const result = bcrypt.compareSync(req.body.password, rows[0].password);
+    const result = bcrypt.compareSync(req.query.password, rows[0].password);
     console.log(result);
 
     if (result) {
