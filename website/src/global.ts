@@ -46,4 +46,17 @@ body{
     background-color: #FFF2F2;
 }
 
+@media only screen and (max-width: 1100px) {
+  html{
+    font-size: 14px;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  h2{
+    font-size: 1.5rem;
+  }
+}
+
+
 `;

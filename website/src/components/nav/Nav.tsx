@@ -13,16 +13,37 @@ import logo from "../../img/logob.png";
 
 //Components
 import NavButton from "./NavButton";
+import { useEffect, useState } from "react";
+
+//Fontawsome
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 const Nav = () => {
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [showMenu, setShowMenu] = useState(false)
   console.log("test");
 
   const navigate = useNavigate();
-  const logginValue = useSelector((state: RootState) => state.login.value);
+  const loginValue = useSelector((state: RootState) => state.login.value);
   const loginedUser = useSelector((state: RootState) => state.userData);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log("resize");
+    const getWidth = () => {
+      const width = window.innerWidth;
+      setWindowWidth(width);
+    };
+
+    window.addEventListener("resize", getWidth);
+
+    return () => {
+      window.removeEventListener("resize", getWidth);
+    };
+  }, []);
 
   const logOutFonction = () => {
     console.log("teescik log out");
@@ -44,9 +65,14 @@ const Nav = () => {
     navigate(`/user/${loginedUser.id}`);
   };
 
+  const showMenuHandler=()=>{
+    setShowMenu(!showMenu)
+  }
+
   return (
+    <FullMenu>
     <NavStyle>
-      {logginValue ? (
+      {loginValue ? (
         <LinkStyle to={"/main"}>
           <LogoImage src={logo} alt="Logo" />
         </LinkStyle>
@@ -54,20 +80,34 @@ const Nav = () => {
         <LogoImage src={logo} alt="Logo" />
       )}
       <Menu>
-        {logginValue ? (
+        {loginValue ? (
           <>
-            <NavButton action={yourAccount} name="Your account" />
-            <NavButton action={addPostHandler} name="Add post" />
-            <NavButton action={addFriendsHandler} name="Add friends" />
-            <NavButton action={logOutFonction} name="Log out" />
+            {windowWidth > 850 ? (
+              <>
+                <NavButton action={yourAccount} name="Your account" />
+                <NavButton action={addPostHandler} name="Add post" />
+                <NavButton action={addFriendsHandler} name="Add friends" />
+                <NavButton action={logOutFonction} name="Log out" />
+              </>
+            ) : (
+              <>
+                <FontAwesomeIcon icon={faBars} onClick={showMenuHandler} />
+              </>
+            )}
           </>
         ) : (
           ""
         )}
       </Menu>
     </NavStyle>
+          {windowWidth>850 && loginValue}
+    </FullMenu>
   );
 };
+
+const FullMenu = styled.div`
+  height: 8vh;
+`
 
 const LinkStyle = styled(Link)`
   height: 100%;
