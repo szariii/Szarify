@@ -13,16 +13,20 @@ import logo from "../../img/logob.png";
 
 //Components
 import NavButton from "./NavButton";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 //Fontawsome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 
+import AnimateHeight from "react-animate-height";
+
 const Nav = () => {
+  const ref = useRef<HTMLDivElement>(null);
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [showMenu, setShowMenu] = useState(false)
+  const [showMenu, setShowMenu] = useState(false);
+  const [navHeight, setNavHeight] = useState((window.innerHeight / 100) * 8);
   console.log("test");
 
   const navigate = useNavigate();
@@ -65,49 +69,111 @@ const Nav = () => {
     navigate(`/user/${loginedUser.id}`);
   };
 
-  const showMenuHandler=()=>{
-    setShowMenu(!showMenu)
-  }
+  const showMenuHandler = () => {
+    setShowMenu(!showMenu);
+    const div = ref.current as HTMLDivElement;
+
+    //setNavHeight(div.offsetHeight);
+    console.log(div.offsetHeight);
+    console.log((window.innerHeight / 100) * 8);
+    if (Math.floor(div.offsetHeight) !== (window.innerHeight / 100) * 8) {
+      setNavHeight(div.offsetHeight);
+    } else {
+      setNavHeight((window.innerHeight / 100) * 8);
+    }
+  };
 
   return (
-    <FullMenu>
-    <NavStyle>
-      {loginValue ? (
-        <LinkStyle to={"/main"}>
-          <LogoImage src={logo} alt="Logo" />
-        </LinkStyle>
-      ) : (
-        <LogoImage src={logo} alt="Logo" />
-      )}
-      <Menu>
-        {loginValue ? (
-          <>
-            {windowWidth > 850 ? (
+    <AnimateHeight duration={500} height={navHeight}>
+      <FullMenu ref={ref}>
+        <NavStyle>
+          {loginValue ? (
+            <LinkStyle to={"/main"}>
+              <LogoImage src={logo} alt="Logo" />
+            </LinkStyle>
+          ) : (
+            <LogoImage src={logo} alt="Logo" />
+          )}
+          <Menu>
+            {loginValue ? (
               <>
-                <NavButton action={yourAccount} name="Your account" />
-                <NavButton action={addPostHandler} name="Add post" />
-                <NavButton action={addFriendsHandler} name="Add friends" />
-                <NavButton action={logOutFonction} name="Log out" />
+                {windowWidth > 850 ? (
+                  <>
+                    <NavButton
+                      windowWidth={windowWidth}
+                      action={yourAccount}
+                      name="Your account"
+                    />
+                    <NavButton
+                      windowWidth={windowWidth}
+                      action={addPostHandler}
+                      name="Add post"
+                    />
+                    <NavButton
+                      windowWidth={windowWidth}
+                      action={addFriendsHandler}
+                      name="Add friends"
+                    />
+                    <NavButton
+                      windowWidth={windowWidth}
+                      action={logOutFonction}
+                      name="Log out"
+                    />
+                  </>
+                ) : (
+                  <>
+                    <Icon icon={faBars} onClick={showMenuHandler} />
+                  </>
+                )}
               </>
             ) : (
-              <>
-                <FontAwesomeIcon icon={faBars} onClick={showMenuHandler} />
-              </>
+              ""
             )}
-          </>
-        ) : (
+          </Menu>
+        </NavStyle>
+
+         {windowWidth <= 850 && loginValue && showMenu ? ( 
+        <>
+          <NavButton
+            windowWidth={windowWidth}
+            action={yourAccount}
+            name="Your account"
+          />
+          <NavButton
+            windowWidth={windowWidth}
+            action={addPostHandler}
+            name="Add post"
+          />
+          <NavButton
+            windowWidth={windowWidth}
+            action={addFriendsHandler}
+            name="Add friends"
+          />
+          <NavButton
+            windowWidth={windowWidth}
+            action={logOutFonction}
+            name="Log out"
+          />
+        </>
+         ) : (
           ""
-        )}
-      </Menu>
-    </NavStyle>
-          {windowWidth>850 && loginValue}
-    </FullMenu>
+        )} 
+      </FullMenu>
+    </AnimateHeight>
   );
 };
 
+const Icon = styled(FontAwesomeIcon)`
+  cursor: pointer;
+`;
+
 const FullMenu = styled.div`
-  height: 8vh;
-`
+  //height: 8vh;
+  position: sticky;
+  top: 0;
+  left: 0;
+  transition: height 2s;
+`;
 
 const LinkStyle = styled(Link)`
   height: 100%;
@@ -127,9 +193,6 @@ const NavStyle = styled.div`
   background-color: #e5e0ff;
   height: 8vh;
   width: 100%;
-  position: sticky;
-  top: 0;
-  left: 0;
 `;
 
 const Menu = styled.div`

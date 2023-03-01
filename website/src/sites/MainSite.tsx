@@ -65,7 +65,7 @@ const MainSite = () => {
   );
 };
 
-const TitleText = styled.h2`
+const TitleText = styled.h1`
   text-align: center;
 `;
 

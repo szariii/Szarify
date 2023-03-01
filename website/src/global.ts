@@ -52,7 +52,7 @@ body{
   }
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 850px) {
   h2{
     font-size: 1.5rem;
   }
