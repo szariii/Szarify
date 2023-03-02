@@ -38,6 +38,9 @@ const Nav = () => {
     const getWidth = () => {
       const width = window.innerWidth;
       setWindowWidth(width);
+      if(width>850){
+        setNavHeight((window.innerHeight / 100) * 8)
+      }
     };
 
     window.addEventListener("resize", getWidth);
@@ -71,7 +74,9 @@ const Nav = () => {
     const div = ref.current as HTMLDivElement;
 
     //setNavHeight(div.offsetHeight);
-    if (Math.floor(div.offsetHeight) !== (window.innerHeight / 100) * 8) {
+
+    if (navHeight === (window.innerHeight / 100) * 8) {
+
       setNavHeight(div.offsetHeight);
     } else {
       setNavHeight((window.innerHeight / 100) * 8);
@@ -127,7 +132,8 @@ const Nav = () => {
           </Menu>
         </NavStyle>
 
-        {windowWidth <= 850 && loginValue && showMenu ? (
+        {windowWidth <= 850 && loginValue ? (
+
           <>
             <NavButton
               windowWidth={windowWidth}
