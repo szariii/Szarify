@@ -14,6 +14,9 @@ import { useSelector } from "react-redux";
 
 import useOnScreen from "../hooks/useOnScreen";
 
+import settings from "../../settings.json"
+
+
 const Post = ({
   id,
   author,
@@ -60,7 +63,7 @@ const Post = ({
       postId: id,
     };
 
-    axios.put("http://127.0.0.1:3000/likePost", sendObj);
+    axios.put(`${settings.address}/likePost`, sendObj);
     setLiked(true);
     setPosts(
       posts.map((ele) =>
@@ -95,7 +98,7 @@ const Post = ({
       array: str,
     };
 
-    axios.put("http://127.0.0.1:3000/dislikePost", sendObj);
+    axios.put(`${settings.address}/dislikePost`, sendObj);
   };
 
   return (

@@ -14,6 +14,9 @@ import { change } from "../../store/slicers/loginSlicer";
 //Helping components
 import WaitingDiv from "../helpingComponents/WaitingDiv";
 
+import settings from "../../settings.json"
+
+
 const LoginForm = () => {
   const navigate = useNavigate();
   const [waitingForData, setWaitingForData] = useState<boolean>(false);
@@ -32,7 +35,7 @@ const LoginForm = () => {
     setInputDataError("");
     setWaitingForData(true);
     const result = await axios.get(
-      "http://127.0.0.1:3000/login",
+      `${settings.address}/login`,
       {params:loginFormData}
     );
     if (result.data.operation) {

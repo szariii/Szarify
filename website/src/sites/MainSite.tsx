@@ -9,6 +9,9 @@ import { useSelector } from "react-redux";
 import Post from "../components/helpingComponents/Post";
 import styled from "styled-components";
 
+import settings from "../settings.json"
+
+
 const MainSite = () => {
   const userData = useSelector((state: RootState) => state.userData);
   const [posts, setPosts] = useState<Array<PostInterface>>([]);
@@ -24,7 +27,7 @@ const MainSite = () => {
       limit: limit,
     };
 
-    const result = await axios.get("http://127.0.0.1:3000/getPosts", {
+    const result = await axios.get(`${settings.address}/getPosts`, {
       params: sendObj,
     });
     const array = [...posts];

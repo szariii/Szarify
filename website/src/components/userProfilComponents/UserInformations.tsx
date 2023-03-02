@@ -7,6 +7,9 @@ import type { RootState } from "../../store/store";
 import { useSelector, useDispatch } from "react-redux";
 import { setUserData } from "../../store/slicers/userDataSlicer";
 
+import settings from "../../settings.json"
+
+
 const UserInformations = ({
   userInfo,
   setUserInfo,
@@ -46,7 +49,7 @@ const UserInformations = ({
     };
 
     const result = await axios.put(
-      "http://127.0.0.1:3000/followUser",
+      `${settings.address}/followUser`,
       sendObj
     );
 
@@ -73,7 +76,7 @@ const UserInformations = ({
 
 
     const result = await axios.put(
-      "http://127.0.0.1:3000/unfollowUser",
+      `${settings.address}/unfollowUser`,
       sendObj
     );
 

@@ -79,7 +79,7 @@ const Nav = () => {
   };
 
   return (
-    <AnimateHeight duration={500} height={navHeight}>
+    <AnimateHeightStyle duration={500} height={navHeight}>
       <FullMenu ref={ref}>
         <NavStyle>
           {loginValue ? (
@@ -127,36 +127,43 @@ const Nav = () => {
           </Menu>
         </NavStyle>
 
-         {windowWidth <= 850 && loginValue && showMenu ? ( 
-        <>
-          <NavButton
-            windowWidth={windowWidth}
-            action={yourAccount}
-            name="Your account"
-          />
-          <NavButton
-            windowWidth={windowWidth}
-            action={addPostHandler}
-            name="Add post"
-          />
-          <NavButton
-            windowWidth={windowWidth}
-            action={addFriendsHandler}
-            name="Add friends"
-          />
-          <NavButton
-            windowWidth={windowWidth}
-            action={logOutFonction}
-            name="Log out"
-          />
-        </>
-         ) : (
+        {windowWidth <= 850 && loginValue && showMenu ? (
+          <>
+            <NavButton
+              windowWidth={windowWidth}
+              action={yourAccount}
+              name="Your account"
+            />
+            <NavButton
+              windowWidth={windowWidth}
+              action={addPostHandler}
+              name="Add post"
+            />
+            <NavButton
+              windowWidth={windowWidth}
+              action={addFriendsHandler}
+              name="Add friends"
+            />
+            <NavButton
+              windowWidth={windowWidth}
+              action={logOutFonction}
+              name="Log out"
+            />
+          </>
+        ) : (
           ""
-        )} 
+        )}
       </FullMenu>
-    </AnimateHeight>
+    </AnimateHeightStyle>
   );
 };
+
+const AnimateHeightStyle = styled(AnimateHeight)`
+  position: sticky;
+  top: 0;
+  left: 0;
+  //transition: height 2s;
+`;
 
 const Icon = styled(FontAwesomeIcon)`
   cursor: pointer;

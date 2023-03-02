@@ -9,6 +9,9 @@ import PasswordForm from "./PasswordForm";
 //Helping components
 import WaitingDiv from "../helpingComponents/WaitingDiv";
 
+import settings from "../../settings.json"
+
+
 const RegisterForm = ({ setLoginForm, loginForm }: RegisterForm) => {
   const [data, setData] = useState<FormData>({
     name: "",
@@ -49,7 +52,7 @@ const RegisterForm = ({ setLoginForm, loginForm }: RegisterForm) => {
       };
       try {
         const result = await axios.get(
-          "http://127.0.0.1:3000/checkData",
+          `${settings.address}/checkData`,
           {params:sendData}
         );
 
