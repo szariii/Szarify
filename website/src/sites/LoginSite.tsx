@@ -19,7 +19,7 @@ const LoginSite = () => {
         <LoginSiteStyle>
           <LoginForm />
           <InfoPanel>
-            <h3>Dont have account? Create in few moments</h3>
+            <SmallText>Dont have account? Create in few moments</SmallText>
             <ChangePanelButton onClick={buttonClickHandler}>
               Register page
             </ChangePanelButton>
@@ -29,7 +29,9 @@ const LoginSite = () => {
         <LoginSiteStyle>
           <RegisterForm setLoginForm={setLoginForm} loginForm={loginForm} />
           <InfoPanel>
-            <h3>Did You already create account? Go to login page</h3>
+            <SmallText>
+              Did You already create account? Go to login page
+            </SmallText>
             <ChangePanelButton onClick={buttonClickHandler}>
               Login page
             </ChangePanelButton>
@@ -39,6 +41,10 @@ const LoginSite = () => {
     </div>
   );
 };
+
+const SmallText = styled.h3`
+  text-align: center;
+`;
 
 const LoginSiteStyle = styled.div`
   display: flex;

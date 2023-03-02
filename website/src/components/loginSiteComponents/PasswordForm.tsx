@@ -180,10 +180,15 @@ const Row = styled.div`
   flex-direction: row;
   justify-content: space-around;
   width: 100%;
+  @media (max-width:850px){
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const BackButton = styled.div`
   display: flex;
+  align-items: center;
   border: 2px solid #7286d3;
   border-radius: 20px;
   :hover {

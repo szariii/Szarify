@@ -35,6 +35,10 @@ const FormInputStyle = styled.div`
     border: 0;
     outline: 0;
   }
+
+  @media (max-width: 850px) {
+    margin: 2rem 0;
+  }
 `;
 
 const InputStyle = styled.input`

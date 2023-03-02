@@ -31,6 +31,9 @@ const FormInputStyle = styled.div`
   flex-direction: column;
   align-items: center;
   width: 40%;
+  @media (max-width: 850px) {
+    margin: 2rem 0;
+  }
   &:focus-visible {
     border: 0;
     outline: 0;
@@ -62,6 +65,6 @@ interface FormInputInterface {
 }
 
 interface LoginFormData {
-    email: string;
-    password: string;
-  }
+  email: string;
+  password: string;
+}

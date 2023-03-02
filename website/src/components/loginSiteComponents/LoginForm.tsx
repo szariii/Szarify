@@ -14,8 +14,7 @@ import { change } from "../../store/slicers/loginSlicer";
 //Helping components
 import WaitingDiv from "../helpingComponents/WaitingDiv";
 
-import settings from "../../settings.json"
-
+import settings from "../../settings.json";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -34,10 +33,9 @@ const LoginForm = () => {
   const loginHandler = async () => {
     setInputDataError("");
     setWaitingForData(true);
-    const result = await axios.get(
-      `${settings.address}/login`,
-      {params:loginFormData}
-    );
+    const result = await axios.get(`${settings.address}/login`, {
+      params: loginFormData,
+    });
     if (result.data.operation) {
       dispatch(setUserData(result.data.data));
       dispatch(change());
@@ -102,6 +100,10 @@ const Row = styled.div`
   flex-direction: row;
   justify-content: space-around;
   width: 100%;
+  @media (max-width: 850px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const ButtonStyle = styled.button`
@@ -123,6 +125,5 @@ const Column = styled.div`
   height: 100%;
   justify-content: space-around;
 `;
-
 
 export default LoginForm;

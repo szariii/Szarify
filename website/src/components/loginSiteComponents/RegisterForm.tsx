@@ -9,8 +9,7 @@ import PasswordForm from "./PasswordForm";
 //Helping components
 import WaitingDiv from "../helpingComponents/WaitingDiv";
 
-import settings from "../../settings.json"
-
+import settings from "../../settings.json";
 
 const RegisterForm = ({ setLoginForm, loginForm }: RegisterForm) => {
   const [data, setData] = useState<FormData>({
@@ -51,11 +50,9 @@ const RegisterForm = ({ setLoginForm, loginForm }: RegisterForm) => {
         nick: data.nick,
       };
       try {
-        const result = await axios.get(
-          `${settings.address}/checkData`,
-          {params:sendData}
-        );
-
+        const result = await axios.get(`${settings.address}/checkData`, {
+          params: sendData,
+        });
 
         setWaitingForData(false);
         if (result.data.free) {
@@ -154,8 +151,6 @@ interface SendData {
   email: string;
 }
 
-
-
 const ErrorMessageStyle = styled.div`
   border: 2px solid red;
   padding: 2rem;
@@ -170,6 +165,10 @@ const Row = styled.div`
   flex-direction: row;
   justify-content: space-around;
   width: 100%;
+  @media (max-width: 850px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const ButtonStyle = styled.button`
@@ -194,6 +193,10 @@ const Column = styled.div`
   align-content: space-around;
   height: 100%;
   justify-content: space-around;
+
+  @media (max-width: 850px) {
+    justify-content: center;
+  }
 `;
 
 interface RegisterForm {
