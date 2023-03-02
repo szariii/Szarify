@@ -15,7 +15,6 @@ const MainSite = () => {
   const [limit, setLimit] = useState<number>(5);
 
   useEffect(() => {
-    console.log(userData);
     getData(limit);
   }, [userData, limit]);
 
@@ -24,13 +23,10 @@ const MainSite = () => {
       array: userData.followed_persons,
       limit: limit,
     };
-    console.log(sendObj);
 
     const result = await axios.get("http://127.0.0.1:3000/getPosts", {
       params: sendObj,
     });
-    console.log(result);
-    console.log(result.data);
     const array = [...posts];
     result.data.map((ele: PostInterface) => array.push(ele));
     setPosts(array);

@@ -31,9 +31,7 @@ function App() {
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
   const userData = useSelector((state: RootState) => state.userData);
   useEffect(() => {
-    console.log(cookies.user);
     if (userData.id === -1 && cookies.user) {
-      console.log("zgadza się");
       setUser();
     }
   }, []);

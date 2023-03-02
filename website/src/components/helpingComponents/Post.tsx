@@ -29,7 +29,6 @@ const Post = ({
 }: PostInterface) => {
   const ref = useRef(null);
   const isVisible = useOnScreen(ref);
-  console.log(isVisible);
   const logedUserData = useSelector((state: RootState) => state.userData);
   const [liked, setLiked] = useState(likes.includes(logedUserData.id));
   const date = new Date(timestamp);
@@ -90,8 +89,6 @@ const Post = ({
     newArray.map((ele) =>
       ele.id === id ? ele.likes.map((num) => (str += `,${num}`)) : {}
     );
-
-    console.log(str);
 
     const sendObj = {
       postId: id,

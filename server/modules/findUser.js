@@ -3,7 +3,6 @@ const findUser = (req, res, connection) => {
 
   connection.query(sql, (err, rows, fields) => {
     if (err) throw err;
-    console.log(rows);
     const array = [];
     if (rows[0].followed_persons !== null) {
       rows[0].followed_persons.split(",").map((ele) => {

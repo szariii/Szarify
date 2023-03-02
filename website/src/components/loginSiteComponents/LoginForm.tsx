@@ -35,9 +35,7 @@ const LoginForm = () => {
       "http://127.0.0.1:3000/login",
       {params:loginFormData}
     );
-    console.log(result);
     if (result.data.operation) {
-      console.log(result.data);
       dispatch(setUserData(result.data.data));
       dispatch(change());
       setWaitingForData(false);

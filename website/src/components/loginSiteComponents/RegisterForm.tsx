@@ -41,10 +41,8 @@ const RegisterForm = ({ setLoginForm, loginForm }: RegisterForm) => {
     }
 
     setInputDataError(newErrorMessage);
-    console.log("weszlo");
     if (newErrorMessage === "") {
       setWaitingForData(true);
-      console.log("tu");
       const sendData: SendData = {
         email: data.email,
         nick: data.nick,
@@ -55,7 +53,6 @@ const RegisterForm = ({ setLoginForm, loginForm }: RegisterForm) => {
           {params:sendData}
         );
 
-        console.log(result);
 
         setWaitingForData(false);
         if (result.data.free) {
@@ -66,7 +63,6 @@ const RegisterForm = ({ setLoginForm, loginForm }: RegisterForm) => {
       } catch (error) {
         const err = error as AxiosError;
         setWaitingForData(false);
-        console.log(err);
         setInputDataError(err.message);
       }
     }

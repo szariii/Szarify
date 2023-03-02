@@ -27,7 +27,6 @@ const Nav = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [showMenu, setShowMenu] = useState(false);
   const [navHeight, setNavHeight] = useState((window.innerHeight / 100) * 8);
-  console.log("test");
 
   const navigate = useNavigate();
   const loginValue = useSelector((state: RootState) => state.login.value);
@@ -36,7 +35,6 @@ const Nav = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("resize");
     const getWidth = () => {
       const width = window.innerWidth;
       setWindowWidth(width);
@@ -50,7 +48,6 @@ const Nav = () => {
   }, []);
 
   const logOutFonction = () => {
-    console.log("teescik log out");
     removeCookie("user", { path: "/" });
     dispatch(change());
     dispatch(unsetUserData());
@@ -74,8 +71,6 @@ const Nav = () => {
     const div = ref.current as HTMLDivElement;
 
     //setNavHeight(div.offsetHeight);
-    console.log(div.offsetHeight);
-    console.log((window.innerHeight / 100) * 8);
     if (Math.floor(div.offsetHeight) !== (window.innerHeight / 100) * 8) {
       setNavHeight(div.offsetHeight);
     } else {

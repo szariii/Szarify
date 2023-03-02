@@ -51,7 +51,6 @@ const PasswordForm = ({
         "http://127.0.0.1:3000/register",
         dataToSend
       );
-      console.log(result);
       setWaitingForData(false);
       if (result.data === "added") {
         setCreatedAccount(true);

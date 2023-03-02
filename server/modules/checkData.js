@@ -11,7 +11,6 @@ const checkData = (req, res, connection) => {
   connection.query(sql, (err, rows, fields) => {
     if (err) throw err;
 
-    console.log(rows);
 
     let obj = {
       free: "",

@@ -52,15 +52,12 @@ const UserInformations = ({
 
     const changeData: LogedUserData = JSON.parse(JSON.stringify(logedUserData));
     changeData.followed_persons.push(userInfo.id);
-    console.log(changeData);
     dispatch(setUserData(changeData));
     setUserInfo({ ...userInfo, followers: userInfo.followers + 1 });
   };
 
   const unFollowButtonClickHandler = async () => {
-    console.log(logedUserData);
     const changeData: LogedUserData = JSON.parse(JSON.stringify(logedUserData));
-    console.log(userInfo.id);
     changeData.followed_persons = logedUserData.followed_persons.filter(
       (ele) => ele !== userInfo.id
     );
@@ -74,7 +71,6 @@ const UserInformations = ({
       array: str,
     };
 
-    console.log(changeData);
 
     const result = await axios.put(
       "http://127.0.0.1:3000/unfollowUser",
