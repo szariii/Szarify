@@ -24,16 +24,23 @@ import AddFriendsSite from "./sites/AddFriendsSite";
 import UserProfilSite from "./sites/UserProfilSite";
 import AddPostSite from "./sites/AddPostSite";
 
+import settings from "./settings.json"
+
 //Colors https://colorhunt.co/palette/7286d38ea7e9e5e0fffff2f2
 
 function App() {
+
+  //Links 
+  //local: "address":"http://127.0.0.1:3000"
+  //prod: //"address":"https://szarify.vercel.app"
+
+
+
   const dispatch = useDispatch();
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
   const userData = useSelector((state: RootState) => state.userData);
   useEffect(() => {
-    console.log(cookies.user);
     if (userData.id === -1 && cookies.user) {
-      console.log("zgadza się");
       setUser();
     }
   }, []);
@@ -44,7 +51,7 @@ function App() {
     };
 
     const result = await axios.get(
-      "http://127.0.0.1:3000/getUserData",
+      `${settings.address}/getUserData`,
       {params:dataToSend}
     );
     dispatch(setUserData(result.data));

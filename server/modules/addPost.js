@@ -1,10 +1,8 @@
 const addPost = (req,res,connection) =>{
-    console.log(req.body);
     const sql = `INSERT INTO posts(author_id, text) VALUES (${req.body.id},"${req.body.text}")`;
     
     connection.query(sql, (err, rows, fields) => {
       if (err) throw err;
-      console.log(rows)
       res.send("added")
     });
 }

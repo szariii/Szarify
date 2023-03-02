@@ -12,7 +12,6 @@ const getPosts = (req, res,connection) => {
 
     connection.query(sql, (err, rows, fields) => {
       if (err) throw err;
-      console.log(rows);
       let sendObj = rows;
       sendObj.map((row, index) => {
         if (row.likes === null) {

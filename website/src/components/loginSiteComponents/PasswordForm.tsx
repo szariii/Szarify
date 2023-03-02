@@ -9,6 +9,9 @@ import { faL, faLongArrowLeft } from "@fortawesome/free-solid-svg-icons";
 //Components
 import PasswordFormInput from "./PasswordFormInput";
 
+import settings from "../../settings.json"
+
+
 const PasswordForm = ({
   setPasswordForm,
   setInputDataError,
@@ -48,10 +51,9 @@ const PasswordForm = ({
       };
 
       const result = await axios.post(
-        "http://127.0.0.1:3000/register",
+        `${settings.address}/register`,
         dataToSend
       );
-      console.log(result);
       setWaitingForData(false);
       if (result.data === "added") {
         setCreatedAccount(true);

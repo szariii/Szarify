@@ -9,6 +9,9 @@ import { useSelector } from "react-redux";
 //Helping components
 import WaitingDiv from "../components/helpingComponents/WaitingDiv";
 
+import settings from "../settings.json"
+
+
 const AddPostSite = () => {
   const [text, setText] = useState<string>("");
   const [waiting, setWaiting] = useState<boolean>(false);
@@ -25,7 +28,7 @@ const AddPostSite = () => {
       id: userData.id,
       text: text,
     };
-    const result = await axios.post("http://127.0.0.1:3000/addPost", sendObj);
+    const result = await axios.post(`${settings.address}/addPost`, sendObj);
     if (result.data === "added") {
       setWaiting(false);
       setThanks(true);

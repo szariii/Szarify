@@ -1,5 +1,4 @@
 const unfollowUser = (req,res,connection)=>{
-    console.log(req.body.array);
     const sql = `UPDATE users SET followed_persons="${req.body.array}" WHERE id = "${req.body.from}";`;
     connection.query(sql, (err, rows, fields) => {
       if (err) throw err;

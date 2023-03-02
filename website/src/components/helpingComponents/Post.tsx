@@ -14,6 +14,9 @@ import { useSelector } from "react-redux";
 
 import useOnScreen from "../hooks/useOnScreen";
 
+import settings from "../../settings.json"
+
+
 const Post = ({
   id,
   author,
@@ -29,7 +32,6 @@ const Post = ({
 }: PostInterface) => {
   const ref = useRef(null);
   const isVisible = useOnScreen(ref);
-  console.log(isVisible);
   const logedUserData = useSelector((state: RootState) => state.userData);
   const [liked, setLiked] = useState(likes.includes(logedUserData.id));
   const date = new Date(timestamp);
@@ -61,7 +63,7 @@ const Post = ({
       postId: id,
     };
 
-    axios.put("http://127.0.0.1:3000/likePost", sendObj);
+    axios.put(`${settings.address}/likePost`, sendObj);
     setLiked(true);
     setPosts(
       posts.map((ele) =>
@@ -91,14 +93,12 @@ const Post = ({
       ele.id === id ? ele.likes.map((num) => (str += `,${num}`)) : {}
     );
 
-    console.log(str);
-
     const sendObj = {
       postId: id,
       array: str,
     };
 
-    axios.put("http://127.0.0.1:3000/dislikePost", sendObj);
+    axios.put(`${settings.address}/dislikePost`, sendObj);
   };
 
   return (

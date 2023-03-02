@@ -9,6 +9,9 @@ import PasswordForm from "./PasswordForm";
 //Helping components
 import WaitingDiv from "../helpingComponents/WaitingDiv";
 
+import settings from "../../settings.json"
+
+
 const RegisterForm = ({ setLoginForm, loginForm }: RegisterForm) => {
   const [data, setData] = useState<FormData>({
     name: "",
@@ -41,21 +44,18 @@ const RegisterForm = ({ setLoginForm, loginForm }: RegisterForm) => {
     }
 
     setInputDataError(newErrorMessage);
-    console.log("weszlo");
     if (newErrorMessage === "") {
       setWaitingForData(true);
-      console.log("tu");
       const sendData: SendData = {
         email: data.email,
         nick: data.nick,
       };
       try {
         const result = await axios.get(
-          "http://127.0.0.1:3000/checkData",
+          `${settings.address}/checkData`,
           {params:sendData}
         );
 
-        console.log(result);
 
         setWaitingForData(false);
         if (result.data.free) {
@@ -66,7 +66,6 @@ const RegisterForm = ({ setLoginForm, loginForm }: RegisterForm) => {
       } catch (error) {
         const err = error as AxiosError;
         setWaitingForData(false);
-        console.log(err);
         setInputDataError(err.message);
       }
     }

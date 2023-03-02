@@ -11,6 +11,9 @@ import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 import UserInformations from "../components/userProfilComponents/UserInformations";
 import UsersPosts from "../components/userProfilComponents/UsersPosts";
 
+import settings from "../settings.json"
+
+
 const UserProfilSite = () => {
   const [limit, setLimit] = useState<number>(5);
   const [userInfo, setUserInfo] = useState<ShortedInfo>({
@@ -24,7 +27,6 @@ const UserProfilSite = () => {
   });
   const [posts, setPosts] = useState<Array<Post>>([]);
   const { id } = useParams();
-  console.log(id);
 
   useEffect(() => {
     getData();
@@ -38,10 +40,9 @@ const UserProfilSite = () => {
     const obj = {
       id: id,
     };
-    const result = await axios.get("http://127.0.0.1:3000/findUser", {
-      params: obj,
-    });
-    console.log(result.data);
+
+    const result = await axios.get(`${settings.address}/findUser`, {params:obj});
+
     setUserInfo(result.data);
   };
 
@@ -51,7 +52,7 @@ const UserProfilSite = () => {
       limit: limit,
     };
 
-    const postsResult = await axios.get("http://127.0.0.1:3000/getUserPosts", {
+    const postsResult = await axios.get(`${settings.address}/getUserPosts`, {
       params: sendPostData,
     });
 

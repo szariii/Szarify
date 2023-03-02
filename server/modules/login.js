@@ -7,16 +7,12 @@ const login = (req,res,connection,bcrypt)=> {
       data: "",
       errorMessage: "Something is wrong with email address or password",
     };
-    console.log(rows);
     if (rows.length === 0) {
-      console.log("finito");
       res.send(obj);
       return;
     }
-    console.log("go");
 
     const result = bcrypt.compareSync(req.query.password, rows[0].password);
-    console.log(result);
 
     if (result) {
 
