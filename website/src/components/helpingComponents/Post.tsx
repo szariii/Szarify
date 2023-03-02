@@ -159,7 +159,11 @@ const PostStyled = styled.div`
   border: 2px solid gray;
   padding: 1rem;
   border-radius: 20px;
-  max-width: 50%;
+  width: 50%;
+
+  @media (max-width: 850px) {
+    width: 100%;
+  }
 `;
 
 interface Post {

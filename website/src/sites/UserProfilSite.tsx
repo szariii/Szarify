@@ -12,7 +12,7 @@ import UserInformations from "../components/userProfilComponents/UserInformation
 import UsersPosts from "../components/userProfilComponents/UsersPosts";
 
 const UserProfilSite = () => {
-  const [limit,setLimit] = useState<number>(5)
+  const [limit, setLimit] = useState<number>(5);
   const [userInfo, setUserInfo] = useState<ShortedInfo>({
     id: -1,
     name: "",
@@ -22,7 +22,7 @@ const UserProfilSite = () => {
     followed_persons: [],
     followers: 0,
   });
-  const [posts,setPosts]=useState<Array<Post>>([])
+  const [posts, setPosts] = useState<Array<Post>>([]);
   const { id } = useParams();
   console.log(id);
 
@@ -30,38 +30,35 @@ const UserProfilSite = () => {
     getData();
   }, []);
 
-  useEffect(()=>{
-    getPosts(limit)
-  },[limit])
-
-
+  useEffect(() => {
+    getPosts(limit);
+  }, [limit]);
 
   const getData = async () => {
     const obj = {
       id: id,
     };
-    const result = await axios.get("http://127.0.0.1:3000/findUser", {params:obj});
+    const result = await axios.get("http://127.0.0.1:3000/findUser", {
+      params: obj,
+    });
     console.log(result.data);
     setUserInfo(result.data);
-
-
   };
 
-  const getPosts=async(limit:number)=>{
-
-    let sendPostData={
-      id:id,
-      limit:limit
-    }
+  const getPosts = async (limit: number) => {
+    let sendPostData = {
+      id: id,
+      limit: limit,
+    };
 
     const postsResult = await axios.get("http://127.0.0.1:3000/getUserPosts", {
       params: sendPostData,
-    });    
+    });
 
-    const array = [...posts]
-    postsResult.data.map((ele: Post) =>array.push(ele))
-    setPosts(array)
-  }
+    const array = [...posts];
+    postsResult.data.map((ele: Post) => array.push(ele));
+    setPosts(array);
+  };
 
   return (
     <UserProfilSiteStyle>
@@ -72,7 +69,14 @@ const UserProfilSite = () => {
       ) : (
         <>
           <UserInformations userInfo={userInfo} setUserInfo={setUserInfo} />
-          <UsersPosts posts={posts} setPosts={setPosts} authorName={userInfo.nick} authorId={userInfo.id} limit={limit} setLimit={setLimit} />
+          <UsersPosts
+            posts={posts}
+            setPosts={setPosts}
+            authorName={userInfo.nick}
+            authorId={userInfo.id}
+            limit={limit}
+            setLimit={setLimit}
+          />
         </>
       )}
     </UserProfilSiteStyle>
@@ -88,7 +92,7 @@ const WaitingDiv = styled.div`
 `;
 
 const UserProfilSiteStyle = styled.div`
-  width: 92%;
+  width: 100%;
   height: 92%;
 `;
 
@@ -109,11 +113,11 @@ interface ShortedInfo {
   followers: number;
 }
 
-interface Post{
-  id:number
-  timestamp:string
-  text:string
-  likes:Array<number>
-  nick:string
-  author_id:number
+interface Post {
+  id: number;
+  timestamp: string;
+  text: string;
+  likes: Array<number>;
+  nick: string;
+  author_id: number;
 }

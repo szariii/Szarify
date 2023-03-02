@@ -40,6 +40,9 @@ const Nav = () => {
     const getWidth = () => {
       const width = window.innerWidth;
       setWindowWidth(width);
+      if(width>850){
+        setNavHeight((window.innerHeight / 100) * 8)
+      }
     };
 
     window.addEventListener("resize", getWidth);
@@ -76,7 +79,8 @@ const Nav = () => {
     //setNavHeight(div.offsetHeight);
     console.log(div.offsetHeight);
     console.log((window.innerHeight / 100) * 8);
-    if (Math.floor(div.offsetHeight) !== (window.innerHeight / 100) * 8) {
+    console.log(navHeight);
+    if (navHeight === (window.innerHeight / 100) * 8) {
       setNavHeight(div.offsetHeight);
     } else {
       setNavHeight((window.innerHeight / 100) * 8);
@@ -132,32 +136,32 @@ const Nav = () => {
           </Menu>
         </NavStyle>
 
-         {windowWidth <= 850 && loginValue && showMenu ? ( 
-        <>
-          <NavButton
-            windowWidth={windowWidth}
-            action={yourAccount}
-            name="Your account"
-          />
-          <NavButton
-            windowWidth={windowWidth}
-            action={addPostHandler}
-            name="Add post"
-          />
-          <NavButton
-            windowWidth={windowWidth}
-            action={addFriendsHandler}
-            name="Add friends"
-          />
-          <NavButton
-            windowWidth={windowWidth}
-            action={logOutFonction}
-            name="Log out"
-          />
-        </>
-         ) : (
+        {windowWidth <= 850 && loginValue ? (
+          <>
+            <NavButton
+              windowWidth={windowWidth}
+              action={yourAccount}
+              name="Your account"
+            />
+            <NavButton
+              windowWidth={windowWidth}
+              action={addPostHandler}
+              name="Add post"
+            />
+            <NavButton
+              windowWidth={windowWidth}
+              action={addFriendsHandler}
+              name="Add friends"
+            />
+            <NavButton
+              windowWidth={windowWidth}
+              action={logOutFonction}
+              name="Log out"
+            />
+          </>
+        ) : (
           ""
-        )} 
+        )}
       </FullMenu>
     </AnimateHeight>
   );
