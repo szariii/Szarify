@@ -3,6 +3,11 @@ const app = express();
 const port = 3000;
 const mysql = require("mysql");
 const bodyParser = require("body-parser");
+const cors = require("cors")
+
+app.use(cors({
+  origin: '*'
+}));
 
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
