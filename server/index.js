@@ -3,11 +3,13 @@ const app = express();
 const port = 3000;
 const mysql = require("mysql");
 const bodyParser = require("body-parser");
-const cors = require("cors")
+const cors = require("cors");
 
-app.use(cors({
-    origin: '*'
-}));
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
@@ -49,7 +51,7 @@ app.use(function (req, res, next) {
   // Website you wish to allow to connect
   res.setHeader("Access-Control-Allow-Origin", "*");
 
-  res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
+  res.setHeader("Access-Control-Allow-Origin", req.headers.origin);
 
   // Request methods you wish to allow
   res.setHeader(
@@ -68,7 +70,11 @@ app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Credentials", true);
 
   // Pass to next layer of middleware
-  next();
+  if ("OPTIONS" == req.method) {
+    res.send(200);
+  } else {
+    next();
+  }
 });
 
 //Routes
