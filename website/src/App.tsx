@@ -24,24 +24,28 @@ import AddFriendsSite from "./sites/AddFriendsSite";
 import UserProfilSite from "./sites/UserProfilSite";
 import AddPostSite from "./sites/AddPostSite";
 
-import settings from "./settings.json"
+import settings from "./settings.json";
+
+import { useNavigate } from "react-router-dom";
 
 //Colors https://colorhunt.co/palette/7286d38ea7e9e5e0fffff2f2
 
 function App() {
-
-  //Links 
+  //Links
   //local: "address":"http://127.0.0.1:3000"
   //prod: //"address":"https://szarify.vercel.app"
-
-
 
   const dispatch = useDispatch();
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
   const userData = useSelector((state: RootState) => state.userData);
+  const navigate = useNavigate();
   useEffect(() => {
     if (userData.id === -1 && cookies.user) {
       setUser();
+    }
+
+    if (cookies.user === undefined) {
+      navigate("/");
     }
   }, []);
 
@@ -50,10 +54,9 @@ function App() {
       id: cookies.user,
     };
 
-    const result = await axios.get(
-      `${settings.address}/getUserData`,
-      {params:dataToSend}
-    );
+    const result = await axios.get(`${settings.address}/getUserData`, {
+      params: dataToSend,
+    });
     dispatch(setUserData(result.data));
     dispatch(change());
   };
