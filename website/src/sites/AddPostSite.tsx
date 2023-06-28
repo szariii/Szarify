@@ -78,7 +78,7 @@ const CommunicateDiv = styled.div`
 `;
 
 const BackgroundDiv = styled.div`
-  position: absolute;
+  position: fixed;
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.4);
